@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>The PowerVR Insider SDK User Guide</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<style type="text/css">
+		<!--
+		@import url(style.css);
+		-->
+		</style>
+		<script type="text/javascript" src="javascript.js"></script>
+</head>
+<body>
+<div id='main'>
+<a href='http://www.imgtec.com'><img class="logo header" src="imaginationlogo.png" /></a>
+<h1>The PowerVR Insider SDK User Guide</h1>
+<h3>OpenGL ES 2.0 SDK for Linux ARMv7</h3>
+<a href='Printable.html' title="Display the SDK User Guide in a Printer Friendly form"><h4>Printable Version</h4></a>
+<br class='end' />
+<h3 class='navbar'>
+		<a href='../../../SDKUserGuide/OpenGL ES 2.0 for LinuxARMv7.html'><span class='navbar' id='ContentsSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Contents</span></a>
+
+<a href='InstallationSection.html'><span class='navbar' id='InstallationSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Installation</span></a>
+
+<a href='ExamplesSection.html'><span class='navbar' id='ExamplesSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Examples</span></a>
+
+<a href='ShellSection.html'><span class='navbar' id='ShellSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">PVRShell</span></a>
+
+<a href='ToolsSection.html'><span class='navbar' id='ToolsSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">PVRTools</span></a>
+
+<span class='navbar navbaractive' id='UtilitiesSectionActive'>Utilities</span>
+
+<a href='DocumentationSection.html'><span class='navbar' id='DocumentationSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Documentation</span></a>
+
+<a href='ContactSection.html'><span class='navbar' id='ContactSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Contact</span></a>
+
+
+</h3>
+
+<div id='content'>
+<div id="Section" class="section">
+<a name="UtilitiesSection"><h3>Utilities</h3></a>
+
+<p>PowerVR Developer Technology provides a number of tools and applications, collectively known as the PowerVR Insider SDK Utilities, to aid in development.</p>
+
+<p>The OSX versions of the utilities provided in the PowerVR Insider SDK require Mac OS 10.6 and the X11 GUI environment in order to function. This environment is an optional install from OSX system discs and is also available from <a href="http://xquartz.macosforge.org">http://xquartz.macosforge.org</a>.</p>
+
+<div class='listsection'>
+<div class='utility' id='PVRGeoPOD'>
+	<div class='ShortDescription' id='PVRGeoPODShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRGeoPOD')">
+			<img class='closed' src="closed.png" />PVRGeoPOD
+		</h4>
+<p>PVRGeoPOD is an exporter plugin for Maya, 3D Studio Max and Blender that exports 3D geometry/scene data to PowerVR's optimized deployment file format: POD.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRGeoPODFull'>
+		<a href='PVRGeoPOD - Overview.png'><img class='utility' src='PVRGeoPOD - Overview.png' alt='PVRGeoPOD' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRGeoPOD')">
+			<img class='open' src="open.png" />PVRGeoPOD
+		</h4>
+PVRGeoPOD is an exporter plugin for Maya, 3D Studio Max and Blender that exports 3D geometry/scene data to PowerVR's optimized deployment file format: POD.
+Some of the notable features include:
+<ul>
+<li>Skinned meshes</li>
+<li>Bone batching based on matrix palette size</li>
+<li>Data format choice (store data as float, byte, uint etc.)</li>
+<li>Interleaving of vertex data if desired</li>
+<li>Mesh instancing</li>
+<li>Multiple texture co-ordinate sets</li>
+<li>Parented nodes</li>
+<li>Polygon stripping</li>
+<li>Polygon/vertex sorting</li>
+<li>Tangent space generation</li>
+</ul>
+The following are not supported:
+<ul>
+<li>UV animation</li>
+<li>Vertex animation</li>
+<li>Splines</li>
+<li>NURBs</li>
+<li>Multiple materials per mesh</li>
+<li>Per object culling information</li>
+<li>Physique Modifier</li>
+</ul>
+
+
+
+
+
+PVRGeoPOD can be found  <span class='source'><a href='../../../Utilities/PVRGeoPOD/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRTexTool'>
+	<div class='ShortDescription' id='PVRTexToolShort'>
+		<img class='utilitysmall' src='PVRTexTool_48.png' alt='PVRTexTool' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRTexTool')">
+			<img class='closed' src="closed.png" />PVRTexTool
+		</h4>
+<p>A collection of tools designed to convert and process image files into texture files suitable for use with PowerVR graphics acceleration.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRTexToolFull'>
+		<a href='PVRTexTool - Main Interface.png'><img class='utility' src='PVRTexTool - Main Interface.png' alt='PVRTexTool' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRTexTool')">
+			<img class='open' src="open.png" />PVRTexTool
+		</h4>
+<p>A collection of tools designed to convert and process image files into texture files suitable for use with PowerVR graphics acceleration. PVRTexTool is also able to perform some simple pre-processing effects on textures such as normal map and cube map generation, colour bleeding and more.</p>
+<p>PVRTexTool comes in the form of a GUI application, a command line tool, plug-ins for Autodesk Maya and 3DS Max and a plug-in for Adobe Photoshop.</p>
+
+
+<p>Documentation for PVRTexTool is <a href='../../../Utilities/PVRTexTool/Documentation/PVRTexTool.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRTexTool can be found  <span class='source'><a href='../../../Utilities/PVRTexTool/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='NavDataTools'>
+	<div class='ShortDescription' id='NavDataToolsShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('NavDataTools')">
+			<img class='closed' src="closed.png" />NavDataTools
+		</h4>
+<p>Tools for preparing navigation data for use in a graphics accelerated application.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='NavDataToolsFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('NavDataTools')">
+			<img class='open' src="open.png" />NavDataTools
+		</h4>
+<p>Tools for preparing navigation data for use in a graphics accelerated application.</p>
+<p>- 3D Scene Compiler</p>
+<p>- Font Converter</p>
+<p>- Intermediate Format Converter</p>
+<p>- Layer Merger</p>
+<p>- libPVRNavigation</p>
+<p>- Nav Data Compiler</p>
+<p>- Occlusion Calculator</p>
+
+
+
+
+
+
+NavDataTools can be found  <span class='source'><a href='../../../Utilities/NavDataTools/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='FileWrap'>
+	<div class='ShortDescription' id='FileWrapShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('FileWrap')">
+			<img class='closed' src="closed.png" />FileWrap
+		</h4>
+<p>FileWrap is a tool that wraps a file into a source file that can be integrated into an application so that resources can be used without access to external files from a file system.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='FileWrapFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('FileWrap')">
+			<img class='open' src="open.png" />FileWrap
+		</h4>
+<p>All file read access in the PVRTools library uses the CPVRTResourceFile class. This not only simplifies code, it also allows the use of a "memory file system". Any file can be statically linked into the application and looked up by name at run time. This is useful for platforms without a file system and keeps all the required data in one place: the application executable.</p>
+<p>When looking for a file, CPVRTResourceFile will first look in the read path the application set by calling CPVRTResourceFile::SetReadPath. This is usually a platform dependent path which can be obtained from PVRShell. If the file is not there, CPVRTResourceFile will look for the file in the memory file system. This way "internal" files linked in the executable can be overridden by external ones. When using the memory file system filenames passed to PVRTools, functions should always be given without a path.</p>
+
+<p>Documentation for FileWrap is <a href='../../../Utilities/Filewrap/Documentation/Filewrap.User Manual.1.6f.External.pdf'>here</a>.</p>
+
+
+
+FileWrap can be found  <span class='source'><a href='../../../Utilities/Filewrap/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRShaman'>
+	<div class='ShortDescription' id='PVRShamanShort'>
+		<img class='utilitysmall' src='PVRShaman_48.png' alt='PVRShaman' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRShaman')">
+			<img class='closed' src="closed.png" />PVRShaman
+		</h4>
+<p>PVRShaman is a tool for the visual prototyping, development, and testing of OpenGL ES 2.0, OpenGL, DirectX9 and DirectX10 shaders.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRShamanFull'>
+		<a href='MainWindow.png'><img class='utility' src='MainWindow.png' alt='PVRShaman' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRShaman')">
+			<img class='open' src="open.png" />PVRShaman
+		</h4>
+<p>PVRShaman is a tool for the rapid prototyping, development, and testing of OpenGL ES 2.0, OpenGL, DirectX9 and DirectX10 shaders.</p>
+<p>It provides a universal shader compiler and editor with syntax highlighting and per line cycle counts for rapid shader development, and a visualization panel where the results of shader changes can be seen in real time.</p>
+<p>Shader development is done in either PowerVR Effects (.pfx) or Microsoft Effect (.fx) format, while geometry is handled in the PowerVR POD (.pod) format; a file format created using the Collada2POD or PVRGeoPOD file exporters also available from Imagination.</p>
+<p>Features</p>
+<p>- Windows, Linux and Mac OS support</p>
+<p>- Geometry input from POD files generated using PVRGeoPOD</p>
+<p>- Support for PowerVR FX files (PFX)</p>
+<p>- Texture input from PVR files generated using PVRTexTool</p>
+<p>- Support for all common texture formats</p>
+<p>- Integrated version of PVRUniSCo Editor</p>
+<p>- POD viewer</p>
+<p>- WYSIWYG concept allows rapid prototyping of new shaders</p>
+<p>- Render to texture and post-processing support</p>
+<p>- Example, built-in materials, shaders and models</p>
+<p>PVRShaman is not designed to be a 3D modelling package so it doesn't allow for extra lights, cameras or objects to be added to a .pod, only for materials and their shaders to be edited.</p>
+
+
+<p>Documentation for PVRShaman is <a href='../../../Utilities/PVRShaman/Documentation/PVRShaman.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRShaman can be found  <span class='source'><a href='../../../Utilities/PVRShaman/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRShaderEditor'>
+	<div class='ShortDescription' id='PVRShaderEditorShort'>
+		<img class='utilitysmall' src='PVRShaderEditor_48.png' alt='PVRShaderEditor' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRShaderEditor')">
+			<img class='closed' src="closed.png" />PVRShaderEditor
+		</h4>
+<p>PVRShaderEditor is a shader editor and graphical front-end for the PVRShader shader compiler.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRShaderEditorFull'>
+		<a href='PVRShaderEditor - Overview.png'><img class='utility' src='PVRShaderEditor - Overview.png' alt='PVRShaderEditor' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRShaderEditor')">
+			<img class='open' src="open.png" />PVRShaderEditor
+		</h4>
+<p>PVRShaderEditor is a shader editor and graphical front-end for the PVRShader shader compiler. It currently offers syntax highlighting for GLSL, GLSL ES, HLSL shaders, VGP vertex programs, Microsoft Effects (.fx) and PowerVR FX (.pfx) files. The Editor is a standalone version of the shader editing functionality that can be found in PVRShaman.</p>
+
+
+<p>Documentation for PVRShaderEditor is <a href='../../../Utilities/PVRShaderEditor/Documentation/PVRShaderEditor.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRShaderEditor can be found  <span class='source'><a href='../../../Utilities/PVRShaderEditor/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRVFrame'>
+	<div class='ShortDescription' id='PVRVFrameShort'>
+		<img class='utilitysmall' src='PVRVFrame_48.png' alt='PVRVFrame' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRVFrame')">
+			<img class='closed' src="closed.png" />PVRVFrame
+		</h4>
+<p>PVRVFrame is an emulation layer for desktop platforms that provides an OpenGL ES and EGL environment mimicking that available on PowerVR-enabled devices.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRVFrameFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRVFrame')">
+			<img class='open' src="open.png" />PVRVFrame
+		</h4>
+<p>PVRVFrame is an emulation layer for desktop platforms that provides an OpenGL ES and EGL environment mimicking that available on PowerVR-enabled devices. It works by redirecting OpenGL ES API calls to the underlying OpenGL desktop implementation present on the development system. PVRVFrame is aimed at developers writing OpenGL ES 1.1 and OpenGL ES 2.0 applications for PowerVR-enabled embedded devices and is designed to mitigate the need to work directly with this hardware.</p>
+
+
+<p>Documentation for PVRVFrame is <a href='../../../Utilities/PVRVFrame/Documentation/PVRVFrame.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRVFrame can be found  <span class='source'><a href='../../../Utilities/PVRVFrame/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRTrace'>
+	<div class='ShortDescription' id='PVRTraceShort'>
+		<img class='utilitysmall' src='PVRTrace_48.png' alt='PVRTrace' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRTrace')">
+			<img class='closed' src="closed.png" />PVRTrace
+		</h4>
+<p>PVRTrace is a tool for analysing OpenGL ES applications by capturing the EGL and OpenGL ES API calls made by an application.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRTraceFull'>
+		<a href='PVRTrace - Interface Overview.png'><img class='utility' src='PVRTrace - Interface Overview.png' alt='PVRTrace' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRTrace')">
+			<img class='open' src="open.png" />PVRTrace
+		</h4>
+<p>PVRTrace is a tool for analysing OpenGL ES applications by capturing the EGL and OpenGL ES API calls made by an application. PVRTrace is compatible with hardware devices and the PVRVFrame emulator, and no recompilation of the application is required. Once captured, data can be analysed with the standalone PVRTrace GUI analysis application.</p>
+
+
+<p>Documentation for PVRTrace is <a href='../../../Utilities/PVRTrace/Documentation/PVRTrace.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRTrace can be found  <span class='source'><a href='../../../Utilities/PVRTrace/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+
+</div>
+
+</div>
+<div id="footer">
+	<p class="copyright">
+		&copy; Imagination Technologies Ltd. All rights reserved.
+	</p>
+	<br class="end" />
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+:Title:
+Multitexture
+
+:ShortDescription:
+This training course is an example of how to combine multiple textures.
+
+:FullDescription:
+This training course demonstrates how to combine multiple textures in six different ways using glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, param).  Param can be any of:
+	-	GL_MODULATE	-	When applying the textures multiply the colours in the first by the colours in the second.
+	-	GL_ADD	-	Add the colours of the two textures together to get the final colour.
+	-	GL_ADD_SIGNED	-	Add the colours of the two textures together and minus 0.5 to get the final colour.
+	-	GL_REPLACE	-	Just use the first texture for texturing.
+	-	GL_SUBTRACT	-	Subtract the colours of the second texture from the first.
+	-	GL_DOT3_RGB	-	Combine the first texture (the normal map) with the second texture (the colour map).
+
+Controls:
+	-	Esc	-	Close the application
+

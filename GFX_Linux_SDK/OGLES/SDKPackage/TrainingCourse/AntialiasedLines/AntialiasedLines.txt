@@ -1,0 +1,24 @@
+:Title:
+AntialiasedLines
+
+:ShortDescription:
+This training course demonstrates how to render antialiased lines without enabling full screen anti-aliasing.
+
+:FullDescription:
+Full screen antialiasing can be too expensive or unavailable on some platforms, but it is possible to render smooth lines without it.  This training course shows how to render anti-aliased lines with round caps using texture filtering and blending.  This is done by drawing each line as a polygon of six triangles.
+
+Eight vertices are written to a vertex array; the rectangles (0,1,2,3) and (4,5,6,7) represent the round line caps. The rectangle (2,3,4,5) is the main line segment.
+
+Note that for this example the caps are entirely between the end points. Even vertices are displaced along the positive normal (+n), odd vertices are displaced along the negative normal.  The pairs (2, 3) and (4, 5) are shifted inwards along the line tangent.
+
+To achieve antialiasing, a special texture is used where an opaque segment exists from 0 to 0.5 on the U-axis. -0.25 is used as the texture coordinate for the even vertices and 0.75 for the odd vertices. This is necessary so that the effect still looks good when the 2 texel wide mip level is used. The GL_REPEAT texture wrap mode makes sure the transparent part on the right side of the texture is repeated to the left of the line/opaque part.  Texture filtering and blending then results in smooth lines.
+
+The method breaks down when the line geometry becomes less than 2 pixels wide (actual line width < 1). In this case the line width should be clamped to 1 and  the actual line width used as an alpha factor, so very thin lines will smoothly fade out.
+
+Controls:
+	-	Esc	-	Close the application
+
+:PolyCount:
+174
+:VertexCount:
+58-232

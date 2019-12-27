@@ -1,0 +1,16 @@
+0001-SGX-AM335x-SGX-graphics-device-registration-using-HW.patch -
+
+Required only when building graphics SDK with PM_RUNTIME=1 command line option.
+This is applicable for AM335x device(OMAPES=8.x) only.
+This patch needs to be applied against kernel sources.
+Kernel sources against which this patch has been tested -
+AM335x 3.2 kernel - Linux PSP Release 04.06.00.09 & 04.06.00.10 releases.
+
+Steps to apply-
+1.Apply this patch against AM335x 3.2 linux kernel source if not already applied
+2.Build the linux kernel for AM335x
+3.Build graphics SDK against this kernel using PM_RUNTIME=1,OMAPES=8.x.
+
+Patch not required for AM335x if PM_RUNTIME not used(ie default build)
+Patch not required for any other device other than AM335x(OMAPES=8.x).
+

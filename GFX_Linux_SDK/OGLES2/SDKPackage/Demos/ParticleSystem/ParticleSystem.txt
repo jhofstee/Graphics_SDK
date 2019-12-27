@@ -1,0 +1,11 @@
+:Title:
+ParticleSystem
+:ShortDescription:
+Shows how to implement a simple particle system using OpenCL and the GPU
+
+:FullDescription:
+Utilises OpenCL to implement a particle system. Furthermore highlights the interaction between OpenCL and OpenGL (plus OpenGLES2).
+
+- left and right arrows - Decrease and increase number of particles
+- up and down arrows - Switch between OpenCL and CPU Particle System implementation.
+

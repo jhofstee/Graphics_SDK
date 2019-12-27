@@ -1,0 +1,34 @@
+// Note: You can change the return type of the proceedures if you wish
+
+global proc string DefineNodeUserData(string $nodeid)
+{
+	// Return the nodes name and class type as a string to be included in the POD node for nodeid
+	string $type = `nodeType $nodeid`;
+	return $nodeid + " is of type " + $type;
+}
+
+global proc string DefineMaterialUserData(string $matid)
+{
+	/* 
+		We're going to return the  material colour but we're going to do it 
+		as a comma seperated string. The first value will be a unique tag to 
+		identify that we're exporting the colour value. The second value will 
+		be the material's red colour value, the third green and the final value
+		blue.
+	*/
+	string $s = "";
+	$s += "3002,";
+	float $c[] = `getAttr ($matid + ".color")`;
+	$s += $c[0] + "," + $c[1] + "," + $c[2];
+	return $s;
+};
+
+
+global proc string DefineSceneUserData()
+{
+
+//		Anything returned from this function will be included in the SPODScene's user data.
+//		This is for information that doesn't belong with a node or a material.
+
+	return "Extra global data";
+}

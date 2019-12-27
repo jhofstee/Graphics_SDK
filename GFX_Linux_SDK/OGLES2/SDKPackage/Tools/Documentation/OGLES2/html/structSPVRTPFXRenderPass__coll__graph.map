@@ -1,0 +1,4 @@
+base referer
+rect $structSPVRTPFXParserTexture.html 7,100 183,127
+rect $structSPVRTPFXParserEffect.html 348,100 513,127
+rect $classCPVRTString.html 240,7 341,34

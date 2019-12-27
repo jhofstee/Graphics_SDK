@@ -1,0 +1,11 @@
+:Title:
+Lighting
+
+:ShortDescription:
+A demonstration of a model being lit with 8 point lights at high performance
+
+:FullDescription:	
+This demo shows a sphere lit by 8 differently coloured spotlights using ambient, diffuse and specular components. 
+
+Controls:
+	-	Esc	-	Close the application

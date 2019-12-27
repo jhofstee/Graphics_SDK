@@ -1,0 +1,17 @@
+:Title:
+FiveShpheres
+
+:ShortDescription:
+An demonstration of different primitive types.
+
+:FullDescription:	
+This demo displays five shpheres displaying five different primitive types:
+	-	GL_POINTS
+	-	GL_TRIANGLES
+	-	GL_LINE_STRIP
+	-	GL_TRIANGLE_FAN
+	-	GL_TRIANGLE_STRIP
+
+Controls:
+	-	Esc	-	Close the application
+	

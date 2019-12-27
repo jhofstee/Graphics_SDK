@@ -1,0 +1,1507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>The PowerVR Insider SDK User Guide</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<style type="text/css">
+		<!--
+		@import url(style.css);
+		@import url(printstyle.css);
+		-->
+		</style>
+		<script type="text/javascript" src="javascript.js"></script>
+</head>
+<body>
+<div id='main'>
+<a href='http://www.imgtec.com'><img class="logo header" src="imaginationlogo.png" /></a>
+<h1>The PowerVR Insider SDK User Guide</h1>
+<h3>OpenGL ES 1.1 SDK for Linux ARMv7</h3>
+<br class='end' />
+<h3 class='navbar'>
+		<a href='c:\dev\buildxl\buildroot\sdk\SDKPackage_OGLES/OpenGL ES 1.1 for LinuxARMv7.html'><span class='navbar' id='ContentsSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Contents</span></a>
+
+<a href='InstallationSection.html'><span class='navbar' id='InstallationSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Installation</span></a>
+
+<a href='ExamplesSection.html'><span class='navbar' id='ExamplesSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Examples</span></a>
+
+<a href='ShellSection.html'><span class='navbar' id='ShellSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">PVRShell</span></a>
+
+<a href='ToolsSection.html'><span class='navbar' id='ToolsSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">PVRTools</span></a>
+
+<a href='UtilitiesSection.html'><span class='navbar' id='UtilitiesSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Utilities</span></a>
+
+<a href='DocumentationSection.html'><span class='navbar' id='DocumentationSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Documentation</span></a>
+
+<a href='ContactSection.html'><span class='navbar' id='ContactSectionButton' onmouseover="className='navbar navbarhigh'" onmouseout="className='navbar'">Contact</span></a>
+
+
+</h3>
+<div id='content'>
+<div id="Section" class="section">
+
+<p>The PowerVR Insider SDK includes sample code, utilities and documentation produced to help developers.</p>
+
+<p>This is in the form of a series of tutorial <a href='Documentation/SDKUserGuideContent/SDKUserGuideOGLESLinuxARMv7/ExamplesSection.html'>Examples</a> that start with showing how to initialise the API through to more complex techniques. Many of these take avantage of our <a href='Documentation/SDKUserGuideContent/SDKUserGuideOGLESLinuxARMv7/ShellSection.html'>PVRShell</a> abstraction layer and <a href='Documentation/SDKUserGuideContent/SDKUserGuideOGLESLinuxARMv7/ToolsSection.html'>PVRTools</a> library which are both available in source code.</p>
+
+<p>To aid in the development process we also provide a suite of applications and tools in the form of our <a href='Documentation/SDKUserGuideContent/SDKUserGuideOGLESLinuxARMv7/UtilitiesSection.html'>Utilities</a> and there is a collection of <a href='Documentation/SDKUserGuideContent/SDKUserGuideOGLESLinuxARMv7/DocumentationSection.html'>Documentation</a> available as well.</p>
+	
+	<h3>Contents</h3>
+
+<div id='contents' class='listsection'>
+	<ol>
+		<div class='example' id='Installation'>
+		<h4 class='title'>
+				<a href='#InstallationSection'>Installation</a>
+		</h4>
+		<p class='description'>Installation instructions and how to get started with the SDK</p>
+</div>
+<div class='example' id='Examples'>
+		<h4 class='title'>
+				<a href='#ExamplesSection'>Examples</a>
+		</h4>
+		<p class='description'>Tutorial examples designed for learning basic, intermediate or advanced techniques</p>
+</div>
+<div class='example' id='PVRShell'>
+		<h4 class='title'>
+				<a href='#ShellSection'>PVRShell</a>
+		</h4>
+		<p class='description'>An OS abstraction layer provided as part of the PowerVR Insider SDK</p>
+</div>
+<div class='example' id='PVRTools'>
+		<h4 class='title'>
+				<a href='#ToolsSection'>PVRTools</a>
+		</h4>
+		<p class='description'>A platform independent library of useful classes available as part of the PowerVR Insider SDK</p>
+</div>
+<div class='example' id='Utilities'>
+		<h4 class='title'>
+				<a href='#UtilitiesSection'>Utilities</a>
+		</h4>
+		<p class='description'>Applications and tools designed to aid and speed development for PowerVR</p>
+</div>
+<div class='example' id='Documentation'>
+		<h4 class='title'>
+				<a href='#DocumentationSection'>Documentation</a>
+		</h4>
+		<p class='description'>Information describing 3D techniques, PowerVR hardware and much more</p>
+</div>
+<div class='example' id='Contact'>
+		<h4 class='title'>
+				<a href='#ContactSection'>Contact</a>
+		</h4>
+		<p class='description'>How to get in touch with PowerVR Developer Technology, who make the PowerVR Insider SDK</p>
+</div>
+
+	</ol>	
+</div>
+
+
+<a name="InstallationSection"><h3>Installation</h3></a>
+
+	<h4>Prerequisites</h4>
+	<p>OpenGL ES 1.1 libraries are not distributed with the PowerVR Insider SDK for Linux. Ask your platform provider for these libraries if you do not have them.</p>
+	<p>You will also need to install the latest platform toolchain on your development machine for your target platform.</p>
+
+	<ol>
+		<h4>Building the Code Examples</h4>
+		<li>
+	<p>Define the TOOLCHAIN environment variable to the toolchain directory, or add the path to the toolchain to the PATH environment variable (i.e. run <span class='code'>export PATH="<i>path to the toolchain</i>:$PATH"</span>).</p>
+		</li>
+		<li>
+	<p>If you want an X11 build and it is available, define the environment variable X11ROOT to point to the freedesktop directory (i.e. <span class='code'>export X11ROOT=/usr/X11R6_SGX</span>)</p>
+		</li>
+		<li>
+	<p>To build individual components go to the directory <span class='path'>Examples/<i>Level</i>/<i>ExampleName</i>/OGLES/Build/LinuxGeneric</span> and run the command:</p>
+	<p class='code'>	LinuxRaw: 	"make PLATFORM=Linux_armv7"</p>
+	<p class='code'>	LinuxX11:	"make PLATFORM=Linux_armv7 X11BUILD=1"</p>
+	<p>The executables for the examples will go to:
+	<span class='path'>Examples/<i>Level</i>/<i>ExampleName</i>/OGLES/Build/Linux_armv7/<i>ReleaseDir</i></span> where <span class='path'>ReleaseDir</span> is one of <span class='path'>ReleaseRaw</span> or <span class='path'>ReleaseX11</span>, <span class='path'>ExampleName</span> is the name of the example that you are building and <span class='path'>Level</span> is will be either Beginner, Intermediate or Advanced.</p>
+		</li>
+		<h4>Running Executables</h4>
+		<li>
+	<p>Ensure that the PowerVR drivers are installed on the target device (please refer to DDK / driver installation instructions).</p>
+		</li>
+		<li>
+	<p>If the standard C++ libraries are not present on your target device, copy libc++ from the toolchain into /usr/lib. libdl and libgcc may also be required.</p>
+	<p>Note: libc++ lives at /usr/lib if you have installed the drivers, or can be found as part of a binary driver release package.</p>
+		</li>
+		<li>
+	<p>Ensure the drivers are running (e.g. type /etc/init.d/rc/pvr start, then run an X session if required).</p>
+	<p>Under X11, window sizes can be specified for the executables using the command line arguments <span class='code'>-posx=n</span> and <span class='code'>-posy=n</span> to define the top right hand corner, and <span class='code'>-width=n</span> and <span class='code'>-height=n</span> to define width and height, respectively.</p>
+	<p>For example:</p>
+		<p class='code'>./OGLESIntroducingPOD  -posx=10 -posy=10 -width=100 -height=100</p>
+		</li>
+		<li>
+<p>If you attempt to run an SDK example and it fails with the message: "Can't open display" produced by the X client, then make sure that the DISPLAY variable is set with the shell command:</p>
+<p class='code'>"set | grep -e DISPLAY"</p>
+<p>If this command doesn't yield any output then type (in shell):
+<p class='code'>"DISPLAY=:0.0; export DISPLAY"</p>
+		</li>
+	</ol>
+<a name="ExamplesSection"><h3>Examples</h3></a>
+<p>The Examples folder in this SDK contains several applications to show specific features of OpenGL ES 1.1 in a simplified form. The code has been thoroughly commented to help developers to understand the API and get started.</p>
+<p>The Examples are located in the \SDKPackage\Examples folder.</p>
+<p><em>Note: Some of the examples do not handle screen rotation to keep the code as simple as possible. On devices with a portrait display the images below might be shown stretched.</em></p>
+
+<a name="BeginnerSection"><h4>Beginner</h4></a>
+<div class='listsection'>
+	<div class='example' id='HelloAPI'>
+	<div class='ShortDescription' id='HelloAPIShort' title='Click for more information' onclick="javascript:exampleExpand('HelloAPI')">
+		<img class='examplesmall' src='../../../Examples/Beginner/01_HelloAPI/HelloAPI.png' alt='HelloAPI' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />HelloAPI
+		</h3>
+<p>Draw a triangle to the screen using hardware acceleration.</p>
+
+	</div>
+
+	<div class='FullDescription' id='HelloAPIFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('HelloAPI')">
+			<img class='open' src="open.png" />HelloAPI
+		</h4>
+		<a href='../../../Examples/Beginner/01_HelloAPI/HelloAPI.png'><img class='example' src='../../../Examples/Beginner/01_HelloAPI/HelloAPI.png' alt='HelloAPI' title="Click for larger image" /></a>
+		<p>A basic tutorial that guides the user, step-by-step, through the process of initializing a window using OpenGL ES 1.1, drawing a triangle in it using hardware acceleration, and then terminating the window.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 HelloAPI is <a href="../../../Examples/Beginner/01_HelloAPI/OGLES/OGLESHelloAPI_NullWS.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 HelloAPI is at <a href='../../../Examples/Beginner/01_HelloAPI/OGLES/'>Examples\Beginner\01_HelloAPI\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='IntroducingPVRShell'>
+	<div class='ShortDescription' id='IntroducingPVRShellShort' title='Click for more information' onclick="javascript:exampleExpand('IntroducingPVRShell')">
+		<img class='examplesmall' src='../../../Examples/Beginner/02_IntroducingPVRShell/IntroducingPVRShell.png' alt='IntroducingPVRShell' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />IntroducingPVRShell
+		</h3>
+<p>This training course introduces the PVRShell library.</p>
+
+	</div>
+
+	<div class='FullDescription' id='IntroducingPVRShellFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('IntroducingPVRShell')">
+			<img class='open' src="open.png" />IntroducingPVRShell
+		</h4>
+		<a href='../../../Examples/Beginner/02_IntroducingPVRShell/IntroducingPVRShell.png'><img class='example' src='../../../Examples/Beginner/02_IntroducingPVRShell/IntroducingPVRShell.png' alt='IntroducingPVRShell' title="Click for larger image" /></a>
+		<p>This training course introduces the PVRShell library.  The PowerVR shell handles all OS specific initialisation code, and has several built in command line features, which allow for the specifying of attributes like  backbuffer size, vsync and antialiasing modes.  The library is constructed around a 'PVRShell' base class, and object of which is constructed and returned from a 'NewDemo' function; applications using PVRShell should inherit from this class and overload the following five functions:</p>
+<p>InitApplication	-	This function is called before any API initialisation has taken place, and can be used to set up any application data which does not require API calls, for example object positions, or arrays containing vertex data, before they are uploaded.</p>
+<p>InitView	-	This function is called after the API has initialised, and can be used to do any remaining initialisation which requires API functionality.</p>
+<p>RenderScene	-	This is called repeatedly to draw the geometry. Returning false from this function instructs the app to enter the quit sequence.</p>
+<p>ReleaseView	-	This function is called before the API is released, and is used to release any API resources.</p>
+<p>QuitApplication	-	This is called last of all, after the API has been released, and can be used to free any leftover user allocated memory.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 IntroducingPVRShell is <a href="../../../Examples/Beginner/02_IntroducingPVRShell/OGLES/OGLESIntroducingPVRShell.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 IntroducingPVRShell is at <a href='../../../Examples/Beginner/02_IntroducingPVRShell/OGLES/'>Examples\Beginner\02_IntroducingPVRShell\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Texturing'>
+	<div class='ShortDescription' id='TexturingShort' title='Click for more information' onclick="javascript:exampleExpand('Texturing')">
+		<img class='examplesmall' src='../../../Examples/Beginner/03_Texturing/Texturing.png' alt='Texturing' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Texturing
+		</h3>
+<p>This training course demonstrates how to apply a texture to a polygon in OpenGL ES 1.1.</p>
+
+	</div>
+
+	<div class='FullDescription' id='TexturingFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Texturing')">
+			<img class='open' src="open.png" />Texturing
+		</h4>
+		<a href='../../../Examples/Beginner/03_Texturing/Texturing.png'><img class='example' src='../../../Examples/Beginner/03_Texturing/Texturing.png' alt='Texturing' title="Click for larger image" /></a>
+		<p>This training course demonstrates how to apply a texture to a polygon in OpenGL ES 1.1. The texture is generated procedurally during initialisation and then loaded into OpenGL ES 1.1. The triangle is then drawn with UV values so that the texture can be applied to it.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Texturing is <a href="../../../Examples/Beginner/03_Texturing/OGLES/OGLESTexturing.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Texturing is at <a href='../../../Examples/Beginner/03_Texturing/OGLES/'>Examples\Beginner\03_Texturing\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='BasicTnL'>
+	<div class='ShortDescription' id='BasicTnLShort' title='Click for more information' onclick="javascript:exampleExpand('BasicTnL')">
+		<img class='examplesmall' src='../../../Examples/Beginner/04_BasicTnL/BasicTnL.png' alt='BasicTnL' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />BasicTnL
+		</h3>
+<p>This training course consists of a demonstration of basic transformation and lighting.</p>
+
+	</div>
+
+	<div class='FullDescription' id='BasicTnLFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('BasicTnL')">
+			<img class='open' src="open.png" />BasicTnL
+		</h4>
+		<a href='../../../Examples/Beginner/04_BasicTnL/BasicTnL.png'><img class='example' src='../../../Examples/Beginner/04_BasicTnL/BasicTnL.png' alt='BasicTnL' title="Click for larger image" /></a>
+		<p>This training course consists of a demonstration of basic transformation and lighting, growing on the basic drawing techniques learnt in HelloTriangle.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 BasicTnL is <a href="../../../Examples/Beginner/04_BasicTnL/OGLES/OGLESBasicTnL.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 BasicTnL is at <a href='../../../Examples/Beginner/04_BasicTnL/OGLES/'>Examples\Beginner\04_BasicTnL\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='IntroducingPVRTools'>
+	<div class='ShortDescription' id='IntroducingPVRToolsShort' title='Click for more information' onclick="javascript:exampleExpand('IntroducingPVRTools')">
+		<img class='examplesmall' src='../../../Examples/Beginner/05_IntroducingPVRTools/IntroducingPVRTools.png' alt='IntroducingPVRTools' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />IntroducingPVRTools
+		</h3>
+<p>This training course introduces the PVRTools libraries.</p>
+
+	</div>
+
+	<div class='FullDescription' id='IntroducingPVRToolsFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('IntroducingPVRTools')">
+			<img class='open' src="open.png" />IntroducingPVRTools
+		</h4>
+		<a href='../../../Examples/Beginner/05_IntroducingPVRTools/IntroducingPVRTools.png'><img class='example' src='../../../Examples/Beginner/05_IntroducingPVRTools/IntroducingPVRTools.png' alt='IntroducingPVRTools' title="Click for larger image" /></a>
+		<p>This training course introduces the PVRTools libraries.  These libraries provide various modules to help developers perform many of the common tasks associated with hardware accelerated graphics rendering.  Some of the available tools are listed below, many more are included:</p>
+<p>-	Vector mathematics</p>
+<p>-	Matrix mathematics</p>
+<p>-	Quarternion mathematics</p>
+<p>-	Extension handling</p>
+<p>-	3D Font drawing</p>
+<p>-	Model loading</p>
+<p>-	Texture decompression</p>
+<p>-	Shader loading</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 IntroducingPVRTools is <a href="../../../Examples/Beginner/05_IntroducingPVRTools/OGLES/OGLESIntroducingPVRTools.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 IntroducingPVRTools is at <a href='../../../Examples/Beginner/05_IntroducingPVRTools/OGLES/'>Examples\Beginner\05_IntroducingPVRTools\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='IntroducingPrint3D'>
+	<div class='ShortDescription' id='IntroducingPrint3DShort' title='Click for more information' onclick="javascript:exampleExpand('IntroducingPrint3D')">
+		<img class='examplesmall' src='../../../Examples/Beginner/06_IntroducingPrint3D/IntroducingPrint3D.png' alt='IntroducingPrint3D' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />IntroducingPrint3D
+		</h3>
+<p>This training course introduces the Print3D class featured within the PVRTools library.</p>
+
+	</div>
+
+	<div class='FullDescription' id='IntroducingPrint3DFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('IntroducingPrint3D')">
+			<img class='open' src="open.png" />IntroducingPrint3D
+		</h4>
+		<a href='../../../Examples/Beginner/06_IntroducingPrint3D/IntroducingPrint3D.png'><img class='example' src='../../../Examples/Beginner/06_IntroducingPrint3D/IntroducingPrint3D.png' alt='IntroducingPrint3D' title="Click for larger image" /></a>
+		<p>This training course introduces the Print3D class from the PVRTools library. Print3D can be used to display text in both 2D and 3D modes. The default projection mode is 2D but supplying a modelview and projection matrices allow the user to render the text in 3D. Text in different colours is also possible.</p>
+<p>Print3D is supplied with a built-in font (Arial Bold) featuring the 7-bit ASCII character set. This font is available in several resolutions and these are chosen depending on the screen size of the device.</p>
+<p>It is also possible to supply user-defined fonts from Unicode character sets (as this training course demonstrates) for a fully customised experience.</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 IntroducingPrint3D is <a href="../../../Examples/Beginner/06_IntroducingPrint3D/OGLES/OGLESIntroducingPrint3D.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 IntroducingPrint3D is at <a href='../../../Examples/Beginner/06_IntroducingPrint3D/OGLES/'>Examples\Beginner\06_IntroducingPrint3D\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='IntroducingPOD'>
+	<div class='ShortDescription' id='IntroducingPODShort' title='Click for more information' onclick="javascript:exampleExpand('IntroducingPOD')">
+		<img class='examplesmall' src='../../../Examples/Beginner/07_IntroducingPOD/IntroducingPOD.png' alt='IntroducingPOD' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />IntroducingPOD
+		</h3>
+<p>This training course introduces the PowerVR Object Data (.pod) format.</p>
+
+	</div>
+
+	<div class='FullDescription' id='IntroducingPODFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('IntroducingPOD')">
+			<img class='open' src="open.png" />IntroducingPOD
+		</h4>
+		<a href='../../../Examples/Beginner/07_IntroducingPOD/IntroducingPOD.png'><img class='example' src='../../../Examples/Beginner/07_IntroducingPOD/IntroducingPOD.png' alt='IntroducingPOD' title="Click for larger image" /></a>
+		<p>This training course introduces the PowerVR Object Data (.pod) format.  It goes into detail on how to open .pod files, load any .pfx and .pvr files that have been referenced, and set up the cameras and lights from the .pod file.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 IntroducingPOD is <a href="../../../Examples/Beginner/07_IntroducingPOD/OGLES/OGLESIntroducingPOD.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 IntroducingPOD is at <a href='../../../Examples/Beginner/07_IntroducingPOD/OGLES/'>Examples\Beginner\07_IntroducingPOD\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div>
+</div>
+<a name="IntermediateSection"><h4>Intermediate</h4></a>
+<div class='listsection'>
+	<div class='example' id='AlphaBlend'>
+	<div class='ShortDescription' id='AlphaBlendShort' title='Click for more information' onclick="javascript:exampleExpand('AlphaBlend')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/AlphaBlend/AlphaBlend.png' alt='AlphaBlend' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />AlphaBlend
+		</h3>
+<p>This training course illustrates how transparency effects can be achieved with blending and the use of some common blending modes.</p>
+
+	</div>
+
+	<div class='FullDescription' id='AlphaBlendFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('AlphaBlend')">
+			<img class='open' src="open.png" />AlphaBlend
+		</h4>
+		<a href='../../../Examples/Intermediate/AlphaBlend/AlphaBlend.png'><img class='example' src='../../../Examples/Intermediate/AlphaBlend/AlphaBlend.png' alt='AlphaBlend' title="Click for larger image" /></a>
+		<p>Blending is a fragment operation that combines the colour value of fragments as they are drawn with values that are already present in the colour buffer. This allows transparent objects to be simulated. This training course shows how to draw blended geometry using four different types of blending modes set with glBlendFunc().  These four types are:</p>
+<p>-	Transparency	(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA))</p>
+<p>-	Additive		(glBlendFunc(GL_ONE, GL_ONE))</p>
+<p>-	Modulate		(glBlendFunc(GL_DST_COLOR, GL_ZERO))</p>
+<p>-	Modulate X2		(glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR))</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 AlphaBlend is <a href="../../../Examples/Intermediate/AlphaBlend/OGLES/OGLESAlphaBlend.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 AlphaBlend is at <a href='../../../Examples/Intermediate/AlphaBlend/OGLES/'>Examples\Intermediate\AlphaBlend\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='AntialiasedLines'>
+	<div class='ShortDescription' id='AntialiasedLinesShort' title='Click for more information' onclick="javascript:exampleExpand('AntialiasedLines')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/AntialiasedLines/AntialiasedLines.png' alt='AntialiasedLines' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />AntialiasedLines
+		</h3>
+<p>This training course demonstrates how to render antialiased lines without enabling full screen anti-aliasing.</p>
+
+	</div>
+
+	<div class='FullDescription' id='AntialiasedLinesFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('AntialiasedLines')">
+			<img class='open' src="open.png" />AntialiasedLines
+		</h4>
+		<a href='../../../Examples/Intermediate/AntialiasedLines/AntialiasedLines.png'><img class='example' src='../../../Examples/Intermediate/AntialiasedLines/AntialiasedLines.png' alt='AntialiasedLines' title="Click for larger image" /></a>
+		<p>Full screen antialiasing can be too expensive or unavailable on some platforms, but it is possible to render smooth lines without it.  This training course shows how to render anti-aliased lines with round caps using texture filtering and blending.  This is done by drawing each line as a polygon of six triangles.</p>
+<p>Eight vertices are written to a vertex array; the rectangles (0,1,2,3) and (4,5,6,7) represent the round line caps. The rectangle (2,3,4,5) is the main line segment.</p>
+<p>Note that for this example the caps are entirely between the end points. Even vertices are displaced along the positive normal (+n), odd vertices are displaced along the negative normal.  The pairs (2, 3) and (4, 5) are shifted inwards along the line tangent.</p>
+<p>To achieve antialiasing, a special texture is used where an opaque segment exists from 0 to 0.5 on the U-axis. -0.25 is used as the texture coordinate for the even vertices and 0.75 for the odd vertices. This is necessary so that the effect still looks good when the 2 texel wide mip level is used. The GL_REPEAT texture wrap mode makes sure the transparent part on the right side of the texture is repeated to the left of the line/opaque part.  Texture filtering and blending then results in smooth lines.</p>
+<p>The method breaks down when the line geometry becomes less than 2 pixels wide (actual line width < 1). In this case the line width should be clamped to 1 and  the actual line width used as an alpha factor, so very thin lines will smoothly fade out.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 AntialiasedLines is <a href="../../../Examples/Intermediate/AntialiasedLines/OGLES/OGLESAntialiasedLines.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 AntialiasedLines is at <a href='../../../Examples/Intermediate/AntialiasedLines/OGLES/'>Examples\Intermediate\AntialiasedLines\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='FiveShpheres'>
+	<div class='ShortDescription' id='FiveShpheresShort' title='Click for more information' onclick="javascript:exampleExpand('FiveShpheres')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/FiveSpheres/FiveSpheres.png' alt='FiveShpheres' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />FiveShpheres
+		</h3>
+<p>An demonstration of different primitive types.</p>
+
+	</div>
+
+	<div class='FullDescription' id='FiveShpheresFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('FiveShpheres')">
+			<img class='open' src="open.png" />FiveShpheres
+		</h4>
+		<a href='../../../Examples/Intermediate/FiveSpheres/FiveSpheres.png'><img class='example' src='../../../Examples/Intermediate/FiveSpheres/FiveSpheres.png' alt='FiveShpheres' title="Click for larger image" /></a>
+		<p>This demo displays five shpheres displaying five different primitive types:</p>
+<p>-	GL_POINTS</p>
+<p>-	GL_TRIANGLES</p>
+<p>-	GL_LINE_STRIP</p>
+<p>-	GL_TRIANGLE_FAN</p>
+<p>-	GL_TRIANGLE_STRIP</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 FiveShpheres is <a href="../../../Examples/Intermediate/FiveSpheres/OGLES/OGLESFiveSpheres.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 FiveShpheres is at <a href='../../../Examples/Intermediate/FiveSpheres/OGLES/'>Examples\Intermediate\FiveSpheres\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Lighting'>
+	<div class='ShortDescription' id='LightingShort' title='Click for more information' onclick="javascript:exampleExpand('Lighting')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/Lighting/Lighting.png' alt='Lighting' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Lighting
+		</h3>
+<p>A demonstration of a model being lit with 8 point lights at high performance</p>
+
+	</div>
+
+	<div class='FullDescription' id='LightingFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Lighting')">
+			<img class='open' src="open.png" />Lighting
+		</h4>
+		<a href='../../../Examples/Intermediate/Lighting/Lighting.png'><img class='example' src='../../../Examples/Intermediate/Lighting/Lighting.png' alt='Lighting' title="Click for larger image" /></a>
+		<p>This demo shows a sphere lit by 8 differently coloured spotlights using ambient, diffuse and specular components.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Lighting is <a href="../../../Examples/Intermediate/Lighting/OGLES/OGLESLighting.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Lighting is at <a href='../../../Examples/Intermediate/Lighting/OGLES/'>Examples\Intermediate\Lighting\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='MatrixPalette'>
+	<div class='ShortDescription' id='MatrixPaletteShort' title='Click for more information' onclick="javascript:exampleExpand('MatrixPalette')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/MatrixPalette/MatrixPalette.png' alt='MatrixPalette' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />MatrixPalette
+		</h3>
+<p>This training course demonstrates how to use matrix palettes to animated a skinned character.</p>
+
+	</div>
+
+	<div class='FullDescription' id='MatrixPaletteFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('MatrixPalette')">
+			<img class='open' src="open.png" />MatrixPalette
+		</h4>
+		<a href='../../../Examples/Intermediate/MatrixPalette/MatrixPalette.png'><img class='example' src='../../../Examples/Intermediate/MatrixPalette/MatrixPalette.png' alt='MatrixPalette' title="Click for larger image" /></a>
+		<p>This training course demonstrates how to use matrix palettes to animated a skinned character loaded from a .pod file.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 MatrixPalette is <a href="../../../Examples/Intermediate/MatrixPalette/OGLES/OGLESMatrixPalette.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 MatrixPalette is at <a href='../../../Examples/Intermediate/MatrixPalette/OGLES/'>Examples\Intermediate\MatrixPalette\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Multitexture'>
+	<div class='ShortDescription' id='MultitextureShort' title='Click for more information' onclick="javascript:exampleExpand('Multitexture')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/Multitexture/Multitexture.png' alt='Multitexture' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Multitexture
+		</h3>
+<p>This training course is an example of how to combine multiple textures.</p>
+
+	</div>
+
+	<div class='FullDescription' id='MultitextureFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Multitexture')">
+			<img class='open' src="open.png" />Multitexture
+		</h4>
+		<a href='../../../Examples/Intermediate/Multitexture/Multitexture.png'><img class='example' src='../../../Examples/Intermediate/Multitexture/Multitexture.png' alt='Multitexture' title="Click for larger image" /></a>
+		<p>This training course demonstrates how to combine multiple textures in six different ways using glTexEnvf(GL_TEXTURE_ENV, GL_COMBINE_RGB, param).  Param can be any of:</p>
+<p>-	GL_MODULATE	-	When applying the textures multiply the colours in the first by the colours in the second.</p>
+<p>-	GL_ADD	-	Add the colours of the two textures together to get the final colour.</p>
+<p>-	GL_ADD_SIGNED	-	Add the colours of the two textures together and minus 0.5 to get the final colour.</p>
+<p>-	GL_REPLACE	-	Just use the first texture for texturing.</p>
+<p>-	GL_SUBTRACT	-	Subtract the colours of the second texture from the first.</p>
+<p>-	GL_DOT3_RGB	-	Combine the first texture (the normal map) with the second texture (the colour map).</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Multitexture is <a href="../../../Examples/Intermediate/Multitexture/OGLES/OGLESMultitexture.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Multitexture is at <a href='../../../Examples/Intermediate/Multitexture/OGLES/'>Examples\Intermediate\Multitexture\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='OptimizeMesh'>
+	<div class='ShortDescription' id='OptimizeMeshShort' title='Click for more information' onclick="javascript:exampleExpand('OptimizeMesh')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/OptimizeMesh/OptimizeMesh.png' alt='OptimizeMesh' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />OptimizeMesh
+		</h3>
+<p>A demonstration of the performance gained when using optimized indexed triangle lists.</p>
+
+	</div>
+
+	<div class='FullDescription' id='OptimizeMeshFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('OptimizeMesh')">
+			<img class='open' src="open.png" />OptimizeMesh
+		</h4>
+		<a href='../../../Examples/Intermediate/OptimizeMesh/OptimizeMesh.png'><img class='example' src='../../../Examples/Intermediate/OptimizeMesh/OptimizeMesh.png' alt='OptimizeMesh' title="Click for larger image" /></a>
+		<p>Shows a textured model rendered in two different modes: one using a non optimized triangle list and one using an optimized triangle list.</p>
+<p>The demo switches mode after a few seconds or after the user presses the action key. Both models were exported with the PVRGeoPOD plug-in from the SDK. The optimized triangle list case was generated using the PVRTTriStrip triangle sorting option from PVRGeoPOD. MBX devices with up-to-date drivers should show higher performance in the optimized triangle list case. Note that the performance difference will not be visible on PC Emulation builds!</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 OptimizeMesh is <a href="../../../Examples/Intermediate/OptimizeMesh/OGLES/OGLESOptimizeMesh.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 OptimizeMesh is at <a href='../../../Examples/Intermediate/OptimizeMesh/OGLES/'>Examples\Intermediate\OptimizeMesh\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='RenderToTexture'>
+	<div class='ShortDescription' id='RenderToTextureShort' title='Click for more information' onclick="javascript:exampleExpand('RenderToTexture')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/RenderToTexture/RenderToTexture.png' alt='RenderToTexture' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />RenderToTexture
+		</h3>
+<p>This training course demonstrates the use of rendering to a texture.</p>
+
+	</div>
+
+	<div class='FullDescription' id='RenderToTextureFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('RenderToTexture')">
+			<img class='open' src="open.png" />RenderToTexture
+		</h4>
+		<a href='../../../Examples/Intermediate/RenderToTexture/RenderToTexture.png'><img class='example' src='../../../Examples/Intermediate/RenderToTexture/RenderToTexture.png' alt='RenderToTexture' title="Click for larger image" /></a>
+		<p>This training course demonstrates rendering a scene to a pBuffer surface or FBO, then binding and applying that render to an object in an additional render pass.</p>
+<p>Controls:</p>
+<p>-	Left	-	Toggles multisampling of the FBOs</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 RenderToTexture is <a href="../../../Examples/Intermediate/RenderToTexture/OGLES/OGLESRenderToTexture.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 RenderToTexture is at <a href='../../../Examples/Intermediate/RenderToTexture/OGLES/'>Examples\Intermediate\RenderToTexture\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='ShadowTechniques'>
+	<div class='ShortDescription' id='ShadowTechniquesShort' title='Click for more information' onclick="javascript:exampleExpand('ShadowTechniques')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/ShadowTechniques/ShadowTechniques.png' alt='ShadowTechniques' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />ShadowTechniques
+		</h3>
+<p>A demonstration of a variety of shadow techniques.</p>
+
+	</div>
+
+	<div class='FullDescription' id='ShadowTechniquesFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('ShadowTechniques')">
+			<img class='open' src="open.png" />ShadowTechniques
+		</h4>
+		<a href='../../../Examples/Intermediate/ShadowTechniques/ShadowTechniques.png'><img class='example' src='../../../Examples/Intermediate/ShadowTechniques/ShadowTechniques.png' alt='ShadowTechniques' title="Click for larger image" /></a>
+		<p>This demo illustrates various shadow techniques. The dynamic blob method draws a transparent blob under the character and the blob moves based on the centre of the object. The projected geometry method draws the object "projected" onto the floor plane, only pure black shadows are possible due to multiple polygons being projected into the same location (would give intensity differences in the shadow if transparency would be used). The final method is a projected texture where the projected shadow texture is updated dynamically each frame (generated by rendering the scene from the point of view of the light source). This method, unlike the previous methods, also works correctly for shadows cast on non-planar objects.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 ShadowTechniques is <a href="../../../Examples/Intermediate/ShadowTechniques/OGLES/OGLESShadowTechniques.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 ShadowTechniques is at <a href='../../../Examples/Intermediate/ShadowTechniques/OGLES/'>Examples\Intermediate\ShadowTechniques\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='ShadowVolume'>
+	<div class='ShortDescription' id='ShadowVolumeShort' title='Click for more information' onclick="javascript:exampleExpand('ShadowVolume')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/ShadowVolume/ShadowVolume.png' alt='ShadowVolume' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />ShadowVolume
+		</h3>
+<p>This training course demonstates how to use the PVRTools libraries to create and use shadow volumes.</p>
+
+	</div>
+
+	<div class='FullDescription' id='ShadowVolumeFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('ShadowVolume')">
+			<img class='open' src="open.png" />ShadowVolume
+		</h4>
+		<a href='../../../Examples/Intermediate/ShadowVolume/ShadowVolume.png'><img class='example' src='../../../Examples/Intermediate/ShadowVolume/ShadowVolume.png' alt='ShadowVolume' title="Click for larger image" /></a>
+		<p>This training course demonstates how to use the PVRTools libraries to create and use shadow volumes.  The process for using this technique is as follows:</p>
+<p>-	Update dynamic shadow volumes</p>
+<p>-	Draw the fully lit scene</p>
+<p>-	Enable the stencil test</p>
+<p>-	Draw the shadow volumes to fill the stencil buffer</p>
+<p>-	Draw a full screen quad that will only appear where the stencil buffer is not zero</p>
+<p>-	Disable the stencil test</p>
+<p>Controls:</p>
+<p>-	1	-	Toggle display of shadow volumes</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 ShadowVolume is <a href="../../../Examples/Intermediate/ShadowVolume/OGLES/OGLESShadowVolume.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 ShadowVolume is at <a href='../../../Examples/Intermediate/ShadowVolume/OGLES/'>Examples\Intermediate\ShadowVolume\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Skinning'>
+	<div class='ShortDescription' id='SkinningShort' title='Click for more information' onclick="javascript:exampleExpand('Skinning')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/Skinning/Skinning.png' alt='Skinning' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Skinning
+		</h3>
+<p>This training course demonstrates how to implement hardware accelerated skinning using .pod files.</p>
+
+	</div>
+
+	<div class='FullDescription' id='SkinningFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Skinning')">
+			<img class='open' src="open.png" />Skinning
+		</h4>
+		<a href='../../../Examples/Intermediate/Skinning/Skinning.png'><img class='example' src='../../../Examples/Intermediate/Skinning/Skinning.png' alt='Skinning' title="Click for larger image" /></a>
+		<p>This training course demonstrates how to implement hardware accelerated skinning using the .pod file loading tools found in the PVRTools libraries.</p>
+<p>Controls:</p>
+<p>-	Left/Right	-	Rotate model clockwise/anti-clockwise</p>
+<p>-	Up/Down	-	Zoom out/in</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Skinning is <a href="../../../Examples/Intermediate/Skinning/OGLES/OGLESSkinning.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Skinning is at <a href='../../../Examples/Intermediate/Skinning/OGLES/'>Examples\Intermediate\Skinning\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Stencil Buffer'>
+	<div class='ShortDescription' id='Stencil BufferShort' title='Click for more information' onclick="javascript:exampleExpand('Stencil Buffer')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/StencilBuffer/StencilBuffer.png' alt='Stencil Buffer' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Stencil Buffer
+		</h3>
+<p>This training course demonstrates how to use the stencil buffer to mask areas of the screen when rendering.</p>
+
+	</div>
+
+	<div class='FullDescription' id='Stencil BufferFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Stencil Buffer')">
+			<img class='open' src="open.png" />Stencil Buffer
+		</h4>
+		<a href='../../../Examples/Intermediate/StencilBuffer/StencilBuffer.png'><img class='example' src='../../../Examples/Intermediate/StencilBuffer/StencilBuffer.png' alt='Stencil Buffer' title="Click for larger image" /></a>
+		<p>This training course demonstrates how to use the stencil buffer to mask areas of the screen when rendering.  A sphere and a cylinder are drawn intersecting.  The sphere is drawn first, then a stencil test performed using the cylinder.  This test is used to determine what colour should be drawn for a given area of the sphere.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Stencil Buffer is <a href="../../../Examples/Intermediate/StencilBuffer/OGLES/OGLESStencilBuffer.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Stencil Buffer is at <a href='../../../Examples/Intermediate/StencilBuffer/OGLES/'>Examples\Intermediate\StencilBuffer\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Trilinear'>
+	<div class='ShortDescription' id='TrilinearShort' title='Click for more information' onclick="javascript:exampleExpand('Trilinear')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/Trilinear/Trilinear.png' alt='Trilinear' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Trilinear
+		</h3>
+<p>This demo illustrates the visual difference between different texture filter modes.</p>
+
+	</div>
+
+	<div class='FullDescription' id='TrilinearFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Trilinear')">
+			<img class='open' src="open.png" />Trilinear
+		</h4>
+		<a href='../../../Examples/Intermediate/Trilinear/Trilinear.png'><img class='example' src='../../../Examples/Intermediate/Trilinear/Trilinear.png' alt='Trilinear' title="Click for larger image" /></a>
+		<p>This demo illustrates the visual difference between the following different texture filter modes:</p>
+<p>-	GL_LINEAR (Bilinear with no MIPMapping)</p>
+<p>-	GL_LINEAR_MIPMAP_NEAREST (Bilinear with MIPMapping)</p>
+<p>-	GL_LINEAR_MIPMAP_LINEAR (Trilinear).</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Trilinear is <a href="../../../Examples/Intermediate/Trilinear/OGLES/OGLESTrilinear.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Trilinear is at <a href='../../../Examples/Intermediate/Trilinear/OGLES/'>Examples\Intermediate\Trilinear\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='UserClipPlanes'>
+	<div class='ShortDescription' id='UserClipPlanesShort' title='Click for more information' onclick="javascript:exampleExpand('UserClipPlanes')">
+		<img class='examplesmall' src='../../../Examples/Intermediate/UserClipPlanes/UserClipPlanes.png' alt='UserClipPlanes' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />UserClipPlanes
+		</h3>
+<p>This demo illustrates how to use user clip planes.</p>
+
+	</div>
+
+	<div class='FullDescription' id='UserClipPlanesFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('UserClipPlanes')">
+			<img class='open' src="open.png" />UserClipPlanes
+		</h4>
+		<a href='../../../Examples/Intermediate/UserClipPlanes/UserClipPlanes.png'><img class='example' src='../../../Examples/Intermediate/UserClipPlanes/UserClipPlanes.png' alt='UserClipPlanes' title="Click for larger image" /></a>
+		<p>This demo illustrates how to use user clip planes; in this case a rotating sphere is shown cut by six user clip planes.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+<p>This demo requires 3D hardware which supports user clip planes.</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 UserClipPlanes is <a href="../../../Examples/Intermediate/UserClipPlanes/OGLES/OGLESUserClipPlanes.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 UserClipPlanes is at <a href='../../../Examples/Intermediate/UserClipPlanes/OGLES/'>Examples\Intermediate\UserClipPlanes\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div>
+</div>
+<a name="AdvancedSection"><h4>Advanced</h4></a>
+<div class='listsection'>
+	<div class='example' id='Coverflow'>
+	<div class='ShortDescription' id='CoverflowShort' title='Click for more information' onclick="javascript:exampleExpand('Coverflow')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Coverflow/Coverflow.png' alt='Coverflow' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Coverflow
+		</h3>
+<p>A demonstration of a coverflow style effect.</p>
+
+	</div>
+
+	<div class='FullDescription' id='CoverflowFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Coverflow')">
+			<img class='open' src="open.png" />Coverflow
+		</h4>
+		<a href='../../../Examples/Advanced/Coverflow/Coverflow.png'><img class='example' src='../../../Examples/Advanced/Coverflow/Coverflow.png' alt='Coverflow' title="Click for larger image" /></a>
+		<p>This demo serves as an example of a coverflow style effect.</p>
+<p>Controls:</p>
+<p>-	Left/Right	-	Flow covers left/right</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Coverflow is <a href="../../../Examples/Advanced/Coverflow/OGLES/OGLESCoverflow.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Coverflow is at <a href='../../../Examples/Advanced/Coverflow/OGLES/'>Examples\Advanced\Coverflow\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='EvilSkull'>
+	<div class='ShortDescription' id='EvilSkullShort' title='Click for more information' onclick="javascript:exampleExpand('EvilSkull')">
+		<img class='examplesmall' src='../../../Examples/Advanced/EvilSkull/EvilSkull.png' alt='EvilSkull' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />EvilSkull
+		</h3>
+<p>A demonstration of morphing in combination with multi-texturing.</p>
+
+	</div>
+
+	<div class='FullDescription' id='EvilSkullFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('EvilSkull')">
+			<img class='open' src="open.png" />EvilSkull
+		</h4>
+		<a href='../../../Examples/Advanced/EvilSkull/EvilSkull.png'><img class='example' src='../../../Examples/Advanced/EvilSkull/EvilSkull.png' alt='EvilSkull' title="Click for larger image" /></a>
+		<p>Morphing creates the final object using weighted blending between a number of different configurations of the same object. Each configuration controls a certain aspect of the object. In the case of EvilSkull the different configurations represent the position of the eyebrows and cheekbones. By setting different weights its possible to generate a huge variety of facial expressions. Meanwhile the background shows multitexturing with two independently animated layers.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 EvilSkull is <a href="../../../Examples/Advanced/EvilSkull/OGLES/OGLESEvilSkull.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 EvilSkull is at <a href='../../../Examples/Advanced/EvilSkull/OGLES/'>Examples\Advanced\EvilSkull\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='FilmTV'>
+	<div class='ShortDescription' id='FilmTVShort' title='Click for more information' onclick="javascript:exampleExpand('FilmTV')">
+		<img class='examplesmall' src='../../../Examples/Advanced/FilmTV/FilmTV.png' alt='FilmTV' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />FilmTV
+		</h3>
+<p>A demonstration of a render to texture effect.</p>
+
+	</div>
+
+	<div class='FullDescription' id='FilmTVFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('FilmTV')">
+			<img class='open' src="open.png" />FilmTV
+		</h4>
+		<a href='../../../Examples/Advanced/FilmTV/FilmTV.png'><img class='example' src='../../../Examples/Advanced/FilmTV/FilmTV.png' alt='FilmTV' title="Click for larger image" /></a>
+		<p>A demonstration of a render to texture effect is shown in this demo.  FBOs are used as render targets each frame, with the previous frames FBOs used as the source of the view from the camera.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 FilmTV is <a href="../../../Examples/Advanced/FilmTV/OGLES/OGLESFilmTV.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 FilmTV is at <a href='../../../Examples/Advanced/FilmTV/OGLES/'>Examples\Advanced\FilmTV\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Fractal'>
+	<div class='ShortDescription' id='FractalShort' title='Click for more information' onclick="javascript:exampleExpand('Fractal')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Fractal/Fractal.png' alt='Fractal' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Fractal
+		</h3>
+<p>A demonstration of drawing a fractal using render to texture.</p>
+
+	</div>
+
+	<div class='FullDescription' id='FractalFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Fractal')">
+			<img class='open' src="open.png" />Fractal
+		</h4>
+		<a href='../../../Examples/Advanced/Fractal/Fractal.png'><img class='example' src='../../../Examples/Advanced/Fractal/Fractal.png' alt='Fractal' title="Click for larger image" /></a>
+		<p>A recursive fractal effect is demonstrated here using the following technique:</p>
+<p>Texture 1 refers to the texture attached to the first FBO. Texture 2 refers to the texture attached to the second FBO.</p>
+<p>Frame 0</p>
+<p>1.	We bind the second frame buffer object so we can do things to it.</p>
+<p>2.	We draw two quads with Texture 1 applied.</p>
+<p>3.	We draw the trunk.</p>
+<p>4.	We make the back buffer current.</p>
+<p>5.	We draw 6 quads with Texture 2 applied.</p>
+<p>Frame 1</p>
+<p>6.	We bind the first frame buffer object so we can do things to it.</p>
+<p>7.	We draw two quads with Texture 2 applied. Texture 2 still contains</p>
+<p>the image from the last frame.</p>
+<p>8.	We draw the trunk.</p>
+<p>9.	We make the back buffer current.</p>
+<p>10.	We draw 6 quads with Texture 1 applied.</p>
+<p>Frame 2</p>
+<p>11.	We bind the second frame buffer object so we can do things to it.</p>
+<p>12.	We draw two quads with Texture 1 applied. Texture 1 still contains</p>
+<p>the image from the last frame.</p>
+<p>13.	We draw the trunk.</p>
+<p>14.	We make the back buffer current.</p>
+<p>15.	We draw 6 quads with Texture 2 applied.</p>
+<p>16.	We repeat steps 6 through to 15 for consecutive frames.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Fractal is <a href="../../../Examples/Advanced/Fractal/OGLES/OGLESFractal.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Fractal is at <a href='../../../Examples/Advanced/Fractal/OGLES/'>Examples\Advanced\Fractal\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Fur'>
+	<div class='ShortDescription' id='FurShort' title='Click for more information' onclick="javascript:exampleExpand('Fur')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Fur/Fur.png' alt='Fur' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Fur
+		</h3>
+<p>A demonstration of a fur effect on a simple duck model</p>
+
+	</div>
+
+	<div class='FullDescription' id='FurFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Fur')">
+			<img class='open' src="open.png" />Fur
+		</h4>
+		<a href='../../../Examples/Advanced/Fur/Fur.png'><img class='example' src='../../../Examples/Advanced/Fur/Fur.png' alt='Fur' title="Click for larger image" /></a>
+		<p>Demonstrates a method for rendering fur. Multiple translucent "shells" of the original model are rendered, each slightly larger than the previous. The texture applied to these layers contains a "dot" in the alpha channel to show where a hair passes through the "shell."</p>
+<p>Controls:</p>
+<p>-	Left/Right	-	Cycle Left/Right through explanation pages</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Fur is <a href="../../../Examples/Advanced/Fur/OGLES/OGLESFur.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Fur is at <a href='../../../Examples/Advanced/Fur/OGLES/'>Examples\Advanced\Fur\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Mouse'>
+	<div class='ShortDescription' id='MouseShort' title='Click for more information' onclick="javascript:exampleExpand('Mouse')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Mouse/Mouse.png' alt='Mouse' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Mouse
+		</h3>
+<p>A demonstration of a cell-shading (a.k.a. Toon shading) effect applied on an animated model</p>
+
+	</div>
+
+	<div class='FullDescription' id='MouseFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Mouse')">
+			<img class='open' src="open.png" />Mouse
+		</h4>
+		<a href='../../../Examples/Advanced/Mouse/Mouse.png'><img class='example' src='../../../Examples/Advanced/Mouse/Mouse.png' alt='Mouse' title="Click for larger image" /></a>
+		<p>Cell-Shading is the "art" of rendering your objects to look like cartoons. This demo shows a dancing mouse with a hard black outline and banded shading to achieve the desired cartoon-look. Both effects are set-up using optimised software routines.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Mouse is <a href="../../../Examples/Advanced/Mouse/OGLES/OGLESMouse.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Mouse is at <a href='../../../Examples/Advanced/Mouse/OGLES/'>Examples\Advanced\Mouse\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Navigation'>
+	<div class='ShortDescription' id='NavigationShort' title='Click for more information' onclick="javascript:exampleExpand('Navigation')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Navigation/Navigation.png' alt='Navigation' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Navigation
+		</h3>
+<p>A demonstration of how to implement rendering algorithms for Navigation software</p>
+
+	</div>
+
+	<div class='FullDescription' id='NavigationFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Navigation')">
+			<img class='open' src="open.png" />Navigation
+		</h4>
+		<a href='../../../Examples/Advanced/Navigation/Navigation.png'><img class='example' src='../../../Examples/Advanced/Navigation/Navigation.png' alt='Navigation' title="Click for larger image" /></a>
+		<p>This demo serves as an example of how to implement rendering algorithms for Navigation software.  Several techniques such as anti-aliased lines and billboards are employed.  The demo also provides an example of how to use culling and batching to optimize rendering.</p>
+<p>Controls:</p>
+<p>-	Up	-	Toggle pause/un-pause</p>
+<p>-	Esc	-	Close the application.</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Navigation is <a href="../../../Examples/Advanced/Navigation/OGLES/OGLESNavigation.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Navigation is at <a href='../../../Examples/Advanced/Navigation/OGLES/'>Examples\Advanced\Navigation\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='3D Navigation'>
+	<div class='ShortDescription' id='3D NavigationShort' title='Click for more information' onclick="javascript:exampleExpand('3D Navigation')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Navigation3D/Navigation3D.png' alt='3D Navigation' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />3D Navigation
+		</h3>
+<p>A demonstration of how to implement rendering algorithms for 3D Navigation software</p>
+
+	</div>
+
+	<div class='FullDescription' id='3D NavigationFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('3D Navigation')">
+			<img class='open' src="open.png" />3D Navigation
+		</h4>
+		<a href='../../../Examples/Advanced/Navigation3D/Navigation3D.png'><img class='example' src='../../../Examples/Advanced/Navigation3D/Navigation3D.png' alt='3D Navigation' title="Click for larger image" /></a>
+		<p>This demo serves as an example of how to implement rendering algorithms for 3D Navigation software.  Several techniques such as frustrum culling, visibility based culling and dynamic stencil-shadow volumes are employed.  The demo also provides an example of how to use culling and batching to optimize rendering.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 3D Navigation is <a href="../../../Examples/Advanced/Navigation3D/OGLES/OGLESNavigation3D.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 3D Navigation is at <a href='../../../Examples/Advanced/Navigation3D/OGLES/'>Examples\Advanced\Navigation3D\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Particles'>
+	<div class='ShortDescription' id='ParticlesShort' title='Click for more information' onclick="javascript:exampleExpand('Particles')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Particles/Particles.png' alt='Particles' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Particles
+		</h3>
+<p>A demonstration of particle effects with frame buffer blending.</p>
+
+	</div>
+
+	<div class='FullDescription' id='ParticlesFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Particles')">
+			<img class='open' src="open.png" />Particles
+		</h4>
+		<a href='../../../Examples/Advanced/Particles/Particles.png'><img class='example' src='../../../Examples/Advanced/Particles/Particles.png' alt='Particles' title="Click for larger image" /></a>
+		<p>This demo shows a physics based particle effect displaying a total of 900 particles (600 real + 300 reflected).   The effect was generated using a frame buffer blending technique.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Particles is <a href="../../../Examples/Advanced/Particles/OGLES/OGLESParticles.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Particles is at <a href='../../../Examples/Advanced/Particles/OGLES/'>Examples\Advanced\Particles\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='PolyBump'>
+	<div class='ShortDescription' id='PolyBumpShort' title='Click for more information' onclick="javascript:exampleExpand('PolyBump')">
+		<img class='examplesmall' src='../../../Examples/Advanced/PolyBump/PolyBump.png' alt='PolyBump' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />PolyBump
+		</h3>
+<p>This demonstration illustrates the PolyBump technology developed by Crytek (commonly referred to as normal or bump mapping).</p>
+
+	</div>
+
+	<div class='FullDescription' id='PolyBumpFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PolyBump')">
+			<img class='open' src="open.png" />PolyBump
+		</h4>
+		<a href='../../../Examples/Advanced/PolyBump/PolyBump.png'><img class='example' src='../../../Examples/Advanced/PolyBump/PolyBump.png' alt='PolyBump' title="Click for larger image" /></a>
+		<p>This demo illustrates the Polybump technology developed by Crytek to enhance 3D-rendering quality without increasing the overhead in real-time rendering. It allows users to create and render an extremely low poly model using per pixel DOT3 lighting. The DOT3 NormalMap is automatically generated from a high poly model. As a result when displaying the low polygon model with the DOT3 map generated from the high polygon object there is virtually no visible difference between the two. Rendering time is greatly decreased and bandwidth is compressed. In this demo a model of a detailed human head is show even though there are only 276 polygons in the model.</p>
+<p>Controls:</p>
+<p>-	1	-	Toggle normal map on/off</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 PolyBump is <a href="../../../Examples/Advanced/PolyBump/OGLES/OGLESPolyBump.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 PolyBump is at <a href='../../../Examples/Advanced/PolyBump/OGLES/'>Examples\Advanced\PolyBump\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='PVRScopeExample'>
+	<div class='ShortDescription' id='PVRScopeExampleShort' title='Click for more information' onclick="javascript:exampleExpand('PVRScopeExample')">
+		<img class='examplesmall' src='../../../Examples/Advanced/PVRScopeExample/OGLESPVRScopeExample.png' alt='PVRScopeExample' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />PVRScopeExample
+		</h3>
+<p>Demonstrates the use of pvrscope and the example graphing code.</p>
+
+	</div>
+
+	<div class='FullDescription' id='PVRScopeExampleFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRScopeExample')">
+			<img class='open' src="open.png" />PVRScopeExample
+		</h4>
+		<a href='../../../Examples/Advanced/PVRScopeExample/OGLESPVRScopeExample.png'><img class='example' src='../../../Examples/Advanced/PVRScopeExample/OGLESPVRScopeExample.png' alt='PVRScopeExample' title="Click for larger image" /></a>
+		<p>Demonstrates the use of pvrscope and the example graphing code that allows an application to return performance statistics from the GPU in real time</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 PVRScopeExample is <a href="../../../Examples/Advanced/PVRScopeExample/OGLES/OGLESPVRScopeExample.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 PVRScopeExample is at <a href='../../../Examples/Advanced/PVRScopeExample/OGLES/'>Examples\Advanced\PVRScopeExample\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='PVRScopeRemote'>
+	<div class='ShortDescription' id='PVRScopeRemoteShort' title='Click for more information' onclick="javascript:exampleExpand('PVRScopeRemote')">
+		<img class='examplesmall' src='../../../Examples/Advanced/PVRScopeRemote/OGLESPVRScopeRemote.png' alt='PVRScopeRemote' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />PVRScopeRemote
+		</h3>
+<p>Demonstrates the use of pvrscope's remote features</p>
+
+	</div>
+
+	<div class='FullDescription' id='PVRScopeRemoteFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRScopeRemote')">
+			<img class='open' src="open.png" />PVRScopeRemote
+		</h4>
+		<a href='../../../Examples/Advanced/PVRScopeRemote/OGLESPVRScopeRemote.png'><img class='example' src='../../../Examples/Advanced/PVRScopeRemote/OGLESPVRScopeRemote.png' alt='PVRScopeRemote' title="Click for larger image" /></a>
+		<p>Demonstrates the use of pvrscope's remote features</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 PVRScopeRemote is <a href="../../../Examples/Advanced/PVRScopeRemote/OGLES/OGLESPVRScopeRemote.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 PVRScopeRemote is at <a href='../../../Examples/Advanced/PVRScopeRemote/OGLES/'>Examples\Advanced\PVRScopeRemote\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Skybox'>
+	<div class='ShortDescription' id='SkyboxShort' title='Click for more information' onclick="javascript:exampleExpand('Skybox')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Skybox/Skybox.png' alt='Skybox' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Skybox
+		</h3>
+<p>A demonstration of a skybox using PVRTC.</p>
+
+	</div>
+
+	<div class='FullDescription' id='SkyboxFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Skybox')">
+			<img class='open' src="open.png" />Skybox
+		</h4>
+		<a href='../../../Examples/Advanced/Skybox/Skybox.png'><img class='example' src='../../../Examples/Advanced/Skybox/Skybox.png' alt='Skybox' title="Click for larger image" /></a>
+		<p>A demonstration of a skybox using PVRTC. The PVRTCs are compressed using PVRTexTools skybox compression feature; a special tool used to remove the hard edges of skyboxes.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Skybox is <a href="../../../Examples/Advanced/Skybox/OGLES/OGLESSkybox.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Skybox is at <a href='../../../Examples/Advanced/Skybox/OGLES/'>Examples\Advanced\Skybox\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div><div class='example' id='Vase'>
+	<div class='ShortDescription' id='VaseShort' title='Click for more information' onclick="javascript:exampleExpand('Vase')">
+		<img class='examplesmall' src='../../../Examples/Advanced/Vase/Vase.png' alt='Vase' />
+		<h3 class='title'>
+			<img class='closed' src="closed.png" />Vase
+		</h3>
+<p>This demo shows a transparent vase with dynamic reflections on its metallic sections.</p>
+
+	</div>
+
+	<div class='FullDescription' id='VaseFull'>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('Vase')">
+			<img class='open' src="open.png" />Vase
+		</h4>
+		<a href='../../../Examples/Advanced/Vase/Vase.png'><img class='example' src='../../../Examples/Advanced/Vase/Vase.png' alt='Vase' title="Click for larger image" /></a>
+		<p>This demo shows a transparent vase with dynamic reflections on its metallic sections.  The effect is achieved through a mixture of texturing blending, and a two pass render that draws both the back and front face of the glass object seperately with difference culling modes.</p>
+<p>Controls:</p>
+<p>-	Esc	-	Close the application</p>
+
+		
+		
+		
+		<p class='source'>The main source file for OpenGL ES 1.1 Vase is <a href="../../../Examples/Advanced/Vase/OGLES/OGLESVase.cpp">here</a>.</p>
+		<p class='source'>The project folder for OpenGL ES 1.1 Vase is at <a href='../../../Examples/Advanced/Vase/OGLES/'>Examples\Advanced\Vase\OGLES</a>.</p>
+	</div>
+	<br class="end" />
+</div>
+</div>
+<a name="ShellSection"><h3>PVRShell</h3></a>
+<p>PVRShell is used in all our <a href='ExamplesSection.html'>Examples</a> (apart from HelloAPI) to provide a common framework for developing OpenGL ES 2 applications on any PowerVR platform.  The shell takes a set of command-line arguments which allow things like the position and size of the example to be controlled. The table below shows these options.</p>
+<p>PVRShell also provides limited keyboard input which may vary depending on your actual platform. If your platform has full keyboard support, the Q key will quit the application and the cursor keys will allow looping through the application options.</p>
+
+<table>
+    <tr>
+	<th>Option</th><th>Description</th>
+    </tr>
+    <tr>
+		<td>-width=N</td><td>Sets the viewport width to N.</td>
+    </tr>
+    <tr>
+		<td>-height=N</td><td>Sets the viewport height to N.</td>
+    </tr>
+    <tr>
+		<td>-posx=N</td><td>Sets the x coordinate of the viewport.</td>
+    </tr>
+    <tr>
+		<td>-posy=N</td><td>Sets the y coordinate of the viewport.</td>
+    </tr>
+    <tr>
+        <td>-FSAAMode=N or -a=N</td><td>Sets full screen anti-aliasing. N can be: 0=no AA , 1=2x AA , 2=4x AA</td>
+    </tr>
+    <tr>
+        <td>-fullscreen=[1,0]</td><td>Runs in full-screen mode(1) or windowed (0)</td>
+    </tr>
+    <tr>
+        <td>-powersaving=[1,0]</td><td>Where available enable/disable power saving.</td>
+    </tr>
+    <tr>
+        <td>-quitaftertime=N or -qat=N</td><td>Sets the x coordinate of the viewport.</td>
+    </tr>
+    <tr>
+        <td>-vsync=N</td><td>Where available modify the apps vsync parameters</td>
+    </tr>
+    <tr>
+        <td>-version</td><td>Output the SDK version to the debug output.</td>
+    </tr>
+    <tr>
+        <td>-info</td><td>Output setup information to the debug output.</td>
+    </tr>
+    <tr>
+        <td>-rotatekeys=N</td><td>Sets the orientation of the keyboard input. N can be: 0-3, 0 is no rotation.</td>
+    </tr>
+    <tr>
+        <td>-c=N</td><td>Save a single screenshot or a range. e.g. -c=1-10, -c=14.</td>
+    </tr>
+    <tr>
+        <td>-priority=N</td><td>Sets the priority of the EGL context.</td>
+    </tr>
+    <tr>
+        <td>-colourbpp=N</td><td>When choosing an EGL config N will be used as the value for EGL_BUFFER_SIZE.</td>
+    </tr>
+    <tr>
+        <td>-config=N</td><td>Force the shell to use the EGL config with ID N.</td>
+    </tr>
+    <tr>
+        <td>-display</td><td>EGL only. Allows you to specify the native display to use if the device has more that one.</td>
+    </tr>
+</table>
+
+<p>The Shell source can be found in the <a href='../../../Shell/'>Shell</a> folder in the SDK package.</p>
+<p>More documentation is available at <a href='../../../Shell/Documentation/Linux/OGLES/Index.html'>Shell/Documentation</a>.</p>
+<a name="ToolsSection"><h3>PVRTools</h3></a>
+<p>The PVRTools library consists of various modules designed to help developers achieve common tasks associated with hardware accelerated graphics rendering, e.g. model loading, extensions handling, matrix functions, 3D font, etc. All OpenGL ES 1.1 SDK examples make use of the OpenGL ES 1.1 Tools library.</p>
+<p>The PVRTools source can be found in the <a href='../../../Tools/'>Tools</a> folder in the SDK package.</p>
+<p>More documentation is available at <a href='../../../Tools/Documentation/OGLES/Index.html'>Tools/Documentation</a>.</p>
+<a name="UtilitiesSection"><h3>Utilities</h3></a>
+
+<p>PowerVR Developer Technology provides a number of tools and applications, collectively known as the PowerVR Insider SDK Utilities, to aid in development.</p>
+
+<p>The OSX versions of the utilities provided in the PowerVR Insider SDK require Mac OS 10.6 and the X11 GUI environment in order to function. This environment is an optional install from OSX system discs and is also available from <a href="http://xquartz.macosforge.org">http://xquartz.macosforge.org</a>.</p>
+
+<div class='listsection'>
+<div class='utility' id='PVRGeoPOD'>
+	<div class='ShortDescription' id='PVRGeoPODShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRGeoPOD')">
+			<img class='closed' src="closed.png" />PVRGeoPOD
+		</h4>
+<p>PVRGeoPOD is an exporter plugin for Maya, 3D Studio Max and Blender that exports 3D geometry/scene data to PowerVR's optimized deployment file format: POD.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRGeoPODFull'>
+		<a href='PVRGeoPOD - Overview.png'><img class='utility' src='PVRGeoPOD - Overview.png' alt='PVRGeoPOD' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRGeoPOD')">
+			<img class='open' src="open.png" />PVRGeoPOD
+		</h4>
+PVRGeoPOD is an exporter plugin for Maya, 3D Studio Max and Blender that exports 3D geometry/scene data to PowerVR's optimized deployment file format: POD.
+Some of the notable features include:
+<ul>
+<li>Skinned meshes</li>
+<li>Bone batching based on matrix palette size</li>
+<li>Data format choice (store data as float, byte, uint etc.)</li>
+<li>Interleaving of vertex data if desired</li>
+<li>Mesh instancing</li>
+<li>Multiple texture co-ordinate sets</li>
+<li>Parented nodes</li>
+<li>Polygon stripping</li>
+<li>Polygon/vertex sorting</li>
+<li>Tangent space generation</li>
+</ul>
+The following are not supported:
+<ul>
+<li>UV animation</li>
+<li>Vertex animation</li>
+<li>Splines</li>
+<li>NURBs</li>
+<li>Multiple materials per mesh</li>
+<li>Per object culling information</li>
+<li>Physique Modifier</li>
+</ul>
+
+
+
+
+
+PVRGeoPOD can be found  <span class='source'><a href='../../../Utilities/PVRGeoPOD/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRTexTool'>
+	<div class='ShortDescription' id='PVRTexToolShort'>
+		<img class='utilitysmall' src='PVRTexTool_48.png' alt='PVRTexTool' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRTexTool')">
+			<img class='closed' src="closed.png" />PVRTexTool
+		</h4>
+<p>A collection of tools designed to convert and process image files into texture files suitable for use with PowerVR graphics acceleration.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRTexToolFull'>
+		<a href='PVRTexTool - Main Interface.png'><img class='utility' src='PVRTexTool - Main Interface.png' alt='PVRTexTool' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRTexTool')">
+			<img class='open' src="open.png" />PVRTexTool
+		</h4>
+<p>A collection of tools designed to convert and process image files into texture files suitable for use with PowerVR graphics acceleration. PVRTexTool is also able to perform some simple pre-processing effects on textures such as normal map and cube map generation, colour bleeding and more.</p>
+<p>PVRTexTool comes in the form of a GUI application, a command line tool, plug-ins for Autodesk Maya and 3DS Max and a plug-in for Adobe Photoshop.</p>
+
+
+<p>Documentation for PVRTexTool is <a href='../../../Utilities/PVRTexTool/Documentation/PVRTexTool.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRTexTool can be found  <span class='source'><a href='../../../Utilities/PVRTexTool/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='NavDataTools'>
+	<div class='ShortDescription' id='NavDataToolsShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('NavDataTools')">
+			<img class='closed' src="closed.png" />NavDataTools
+		</h4>
+<p>Tools for preparing navigation data for use in a graphics accelerated application.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='NavDataToolsFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('NavDataTools')">
+			<img class='open' src="open.png" />NavDataTools
+		</h4>
+<p>Tools for preparing navigation data for use in a graphics accelerated application.</p>
+<p>- 3D Scene Compiler</p>
+<p>- Font Converter</p>
+<p>- Intermediate Format Converter</p>
+<p>- Layer Merger</p>
+<p>- libPVRNavigation</p>
+<p>- Nav Data Compiler</p>
+<p>- Occlusion Calculator</p>
+
+
+
+
+
+
+NavDataTools can be found  <span class='source'><a href='../../../Utilities/NavDataTools/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='FileWrap'>
+	<div class='ShortDescription' id='FileWrapShort'>
+		
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('FileWrap')">
+			<img class='closed' src="closed.png" />FileWrap
+		</h4>
+<p>FileWrap is a tool that wraps a file into a source file that can be integrated into an application so that resources can be used without access to external files from a file system.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='FileWrapFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('FileWrap')">
+			<img class='open' src="open.png" />FileWrap
+		</h4>
+<p>All file read access in the PVRTools library uses the CPVRTResourceFile class. This not only simplifies code, it also allows the use of a "memory file system". Any file can be statically linked into the application and looked up by name at run time. This is useful for platforms without a file system and keeps all the required data in one place: the application executable.</p>
+<p>When looking for a file, CPVRTResourceFile will first look in the read path the application set by calling CPVRTResourceFile::SetReadPath. This is usually a platform dependent path which can be obtained from PVRShell. If the file is not there, CPVRTResourceFile will look for the file in the memory file system. This way "internal" files linked in the executable can be overridden by external ones. When using the memory file system filenames passed to PVRTools, functions should always be given without a path.</p>
+
+<p>Documentation for FileWrap is <a href='../../../Utilities/Filewrap/Documentation/Filewrap.User Manual.1.6f.External.pdf'>here</a>.</p>
+
+
+
+FileWrap can be found  <span class='source'><a href='../../../Utilities/Filewrap/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRShaman'>
+	<div class='ShortDescription' id='PVRShamanShort'>
+		<img class='utilitysmall' src='PVRShaman_48.png' alt='PVRShaman' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRShaman')">
+			<img class='closed' src="closed.png" />PVRShaman
+		</h4>
+<p>PVRShaman is a tool for the visual prototyping, development, and testing of OpenGL ES 2.0, OpenGL, DirectX9 and DirectX10 shaders.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRShamanFull'>
+		<a href='MainWindow.png'><img class='utility' src='MainWindow.png' alt='PVRShaman' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRShaman')">
+			<img class='open' src="open.png" />PVRShaman
+		</h4>
+<p>PVRShaman is a tool for the rapid prototyping, development, and testing of OpenGL ES 2.0, OpenGL, DirectX9 and DirectX10 shaders.</p>
+<p>It provides a universal shader compiler and editor with syntax highlighting and per line cycle counts for rapid shader development, and a visualization panel where the results of shader changes can be seen in real time.</p>
+<p>Shader development is done in either PowerVR Effects (.pfx) or Microsoft Effect (.fx) format, while geometry is handled in the PowerVR POD (.pod) format; a file format created using the Collada2POD or PVRGeoPOD file exporters also available from Imagination.</p>
+<p>Features</p>
+<p>- Windows, Linux and Mac OS support</p>
+<p>- Geometry input from POD files generated using PVRGeoPOD</p>
+<p>- Support for PowerVR FX files (PFX)</p>
+<p>- Texture input from PVR files generated using PVRTexTool</p>
+<p>- Support for all common texture formats</p>
+<p>- Integrated version of PVRUniSCo Editor</p>
+<p>- POD viewer</p>
+<p>- WYSIWYG concept allows rapid prototyping of new shaders</p>
+<p>- Render to texture and post-processing support</p>
+<p>- Example, built-in materials, shaders and models</p>
+<p>PVRShaman is not designed to be a 3D modelling package so it doesn't allow for extra lights, cameras or objects to be added to a .pod, only for materials and their shaders to be edited.</p>
+
+
+<p>Documentation for PVRShaman is <a href='../../../Utilities/PVRShaman/Documentation/PVRShaman.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRShaman can be found  <span class='source'><a href='../../../Utilities/PVRShaman/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRVFrame'>
+	<div class='ShortDescription' id='PVRVFrameShort'>
+		<img class='utilitysmall' src='PVRVFrame_48.png' alt='PVRVFrame' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRVFrame')">
+			<img class='closed' src="closed.png" />PVRVFrame
+		</h4>
+<p>PVRVFrame is an emulation layer for desktop platforms that provides an OpenGL ES and EGL environment mimicking that available on PowerVR-enabled devices.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRVFrameFull'>
+		
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRVFrame')">
+			<img class='open' src="open.png" />PVRVFrame
+		</h4>
+<p>PVRVFrame is an emulation layer for desktop platforms that provides an OpenGL ES and EGL environment mimicking that available on PowerVR-enabled devices. It works by redirecting OpenGL ES API calls to the underlying OpenGL desktop implementation present on the development system. PVRVFrame is aimed at developers writing OpenGL ES 1.1 and OpenGL ES 2.0 applications for PowerVR-enabled embedded devices and is designed to mitigate the need to work directly with this hardware.</p>
+
+
+<p>Documentation for PVRVFrame is <a href='../../../Utilities/PVRVFrame/Documentation/PVRVFrame.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRVFrame can be found  <span class='source'><a href='../../../Utilities/PVRVFrame/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+<div class='utility' id='PVRTrace'>
+	<div class='ShortDescription' id='PVRTraceShort'>
+		<img class='utilitysmall' src='PVRTrace_48.png' alt='PVRTrace' />
+		<h4 class='title' title='Click for more information' onclick="javascript:exampleExpand('PVRTrace')">
+			<img class='closed' src="closed.png" />PVRTrace
+		</h4>
+<p>PVRTrace is a tool for analysing OpenGL ES applications by capturing the EGL and OpenGL ES API calls made by an application.</p>
+
+	<br class='end' />
+	</div>
+	<div class='FullDescription' id='PVRTraceFull'>
+		<a href='PVRTrace - Interface Overview.png'><img class='utility' src='PVRTrace - Interface Overview.png' alt='PVRTrace' /></a>
+		<h4 class='title' title='Click to collapse' onclick="javascript:exampleContract('PVRTrace')">
+			<img class='open' src="open.png" />PVRTrace
+		</h4>
+<p>PVRTrace is a tool for analysing OpenGL ES applications by capturing the EGL and OpenGL ES API calls made by an application. PVRTrace is compatible with hardware devices and the PVRVFrame emulator, and no recompilation of the application is required. Once captured, data can be analysed with the standalone PVRTrace GUI analysis application.</p>
+
+
+<p>Documentation for PVRTrace is <a href='../../../Utilities/PVRTrace/Documentation/PVRTrace.User Manual.pdf'>here</a>.</p>
+
+
+
+PVRTrace can be found  <span class='source'><a href='../../../Utilities/PVRTrace/'>here</a>.</span>
+	</div>
+	<br class='end' />
+</div>
+
+</div>
+
+<a name="DocumentationSection"><h3>Documentation</h3></a>
+
+<div class='listsection'>
+<div class='example' id='PowerVR Series 5 Architecture Guide for Developers'>
+		<h4 class='title'>
+			<a href='../../Architecture Guides\PowerVR Series 5.Architecture Guide for Developers.pdf'>PowerVR Series 5 Architecture Guide for Developers</a>
+		</h4>
+		<p class='description'>The purpose of this document is to provide graphics programmers with an overview of the PowerVR Series 5 (SGX & SGX-MP) graphics hardware architecture, while also highlighting why some performance recommendations make such a significant difference to graphics rendering on PowerVR platforms. Furthermore, the information in this document outlines the purpose of each hardware module for which PVRTune provides performance counters.</p>
+</div><div class='example' id='PowerVR Performance Recommendations'>
+		<h4 class='title'>
+			<a href='../../Architecture Guides\PowerVR.Performance Recommendations.pdf'>PowerVR Performance Recommendations</a>
+		</h4>
+		<p class='description'>Performance guidelines and best practices for writing applications for PowerVR hardware.</p>
+</div><div class='example' id='PFX Language Format Specification'>
+		<h4 class='title'>
+			<a href='../../Specifications\PFX Language Format.Specification.pdf'>PFX Language Format Specification</a>
+		</h4>
+		<p class='description'>Describes PowerVR's shader effect file format: PFX.</p>
+</div><div class='example' id='PVR File Format Specification'>
+		<h4 class='title'>
+			<a href='../../Specifications\PVR File Format.Specification.pdf'>PVR File Format Specification</a>
+		</h4>
+		<p class='description'>Describes PowerVR's texture container format: PVR.</p>
+</div><div class='example' id='POD File Format Specification'>
+		<h4 class='title'>
+			<a href='../../Specifications\POD File Format.Specification.pdf'>POD File Format Specification</a>
+		</h4>
+		<p class='description'>Describes PowerVR's 3D data container format: POD.</p>
+</div><div class='example' id='Navigation Rendering Techniques Whitepaper'>
+		<h4 class='title'>
+			<a href='../../Whitepapers\Navigation Rendering Techniques.Whitepaper.pdf'>Navigation Rendering Techniques Whitepaper</a>
+		</h4>
+		<p class='description'>Describes preparing and rendering real-world navigation data for rendering using PowerVR hardware acceleration. A "2.5D" approach is explored (for 3D rendering please see the "PowerVR 3D Navigation Rendering Techniques" document). This is illustrated in Navigation in our ExamplesSection.html#AdvancedSection.</p>
+</div>
+</div>
+
+<p></p>
+
+<a name="ContactSection"><h3><a name='contact'>Contact</a></h3></a>
+
+<p>For further support:</p>
+
+<p><p><a class='email' href='mailto:devtech@imgtec.com'>devtech@imgtec.com</a></p>
+</p>
+
+<p class='postaladdress'>PowerVR Developer Technology<br />
+Imagination Technologies Ltd.<br />
+Home Park Estate<br />
+Kings Langley<br />
+Hertfordshire, WD4 8LZ<br />
+United Kingdom</p>
+
+<p>Tel: +44 (0)1923 260511</p>
+<p>Fax: +44 (0)1923 277463</p>
+
+<p>For more information about PowerVR or Imagination Technologies Ltd. please visit our website at <a href='http://www.imgtec.com'>http://www.imgtec.com</a></p>
+</div>
+<div id="footer">
+	<p class="copyright">
+		&copy; Imagination Technologies Ltd. All rights reserved.
+	</p>
+	<br class="end" />
+</div>
+</div>
+</div>
+</body>
+</html>
