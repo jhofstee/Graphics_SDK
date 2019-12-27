@@ -747,6 +747,10 @@ static int PVRSRVOpen(struct inode unref__ * pInode, struct file *pFile)
 
 	LinuxLockMutex(&gPVRSRVLock);
 
+#if !defined(SUPPORT_DRI_DRM)
+	pFile->f_mode |= FMODE_UNSIGNED_OFFSET;
+#endif
+
 	ui32PID = OSGetCurrentProcessIDKM();
 
 	if (PVRSRVProcessConnect(ui32PID, 0) != PVRSRV_OK)
