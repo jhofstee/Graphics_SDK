@@ -595,7 +595,7 @@ void PVRShellInit::OsRenderComplete()
 		unsigned char input[32];
 		ret = read(remote_fd, input, sizeof(input));
 
-		if(input[0] == 0x87)
+		if(ret >= 2 && input[0] == 0x87)
 		{
 			switch(input[1])
 			{

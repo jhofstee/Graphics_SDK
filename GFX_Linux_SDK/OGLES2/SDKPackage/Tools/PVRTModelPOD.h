@@ -367,9 +367,9 @@ public:
 		const char		* pData,
 		const size_t	i32Size,
 		char			* const pszExpOpt = NULL,
-		const size_t	count = NULL,
+		const size_t	count = 0,
 		char			* const pszHistory = NULL,
-		const size_t	historyCount = NULL);
+		const size_t	historyCount = 0);
 
 	/*!***************************************************************************
 	 @Function		ReadFromMemory
