@@ -1,0 +1,13 @@
+prefix=/usr/local/XSGX
+exec_prefix=${prefix}
+libdir=/usr/local/XSGX/lib
+includedir=/usr/local/XSGX/include
+
+Name: glut
+Description: Mesa OpenGL Utility Toolkit library
+Requires: gl glu
+Requires.private: x11 xmu xi
+Version: 3.7.1
+Libs: -L${libdir} -lglut
+Libs.private: -lm
+Cflags: -I${includedir} 

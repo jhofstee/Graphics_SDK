@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>The XIM Transport Specification</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /><meta name="description" content="This specification describes the transport layer interfaces between Xlib and IM Server, which makes various channels usable such as X protocol or TCP/IP, DECnet and etc." /></head><body><div class="book" title="The XIM Transport Specification"><div class="titlepage"><div><div><h1 class="title"><a id="trans"></a>The XIM Transport Specification</h1></div><div><h2 class="subtitle">Revision 0.1</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Takashi</span> <span class="surname">Fujiwara</span></h3><div class="affiliation"><span class="orgname">FUJITSU LIMITED<br /></span></div></div></div></div><div><p class="releaseinfo">X Version 11, Release 7</p></div><div><p class="copyright">Copyright © 1994 FUJITSU LIMITED</p></div><div><p class="copyright">Copyright © 1994 X Consortium</p></div><div><div class="legalnotice" title="Legal Notice"><a id="id2971399"></a><p>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files
+(the “Software”), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following
+conditions:
+</p><p>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+</p><p>
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN
+NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</p><p>
+Except as contained in this notice, the name of The Open Group shall not
+be used in advertising or otherwise to promote the sale, use or other dealings
+in this Software without prior written authorization from X Consortium.
+</p><p>X Window System is a trademark of The Open Group.</p></div></div><div><div class="abstract" title="Abstract"><p class="title"><b>Abstract</b></p><p>
+This specification describes the transport layer interfaces between Xlib and IM Server,
+which makes various channels usable such as X protocol or TCP/IP, DECnet and etc.
+</p></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="chapter"><a href="#xim_transport_specification">1. X Transport Specification</a></span></dt><dd><dl><dt><span class="sect1"><a href="#Introduction">Introduction</a></span></dt><dt><span class="sect1"><a href="#Initialization">Initialization</a></span></dt><dd><dl><dt><span class="sect2"><a href="#Registering_structure_to_initialize">Registering structure to initialize</a></span></dt><dt><span class="sect2"><a href="#Initialization_function">Initialization function</a></span></dt></dl></dd><dt><span class="sect1"><a href="#The_interface_transport_layer_functions">The interface/transport layer functions</a></span></dt><dd><dl><dt><span class="sect2"><a href="#Opening_connection">Opening connection</a></span></dt><dt><span class="sect2"><a href="#Closing_connection">Closing connection</a></span></dt><dt><span class="sect2"><a href="#Writing_data">Writing data</a></span></dt><dt><span class="sect2"><a href="#Reading_data">Reading data</a></span></dt><dt><span class="sect2"><a href="#Flushing_buffer">Flushing buffer</a></span></dt><dt><span class="sect2"><a href="#Registering_asynchronous_data_handler">Registering asynchronous data handler</a></span></dt><dt><span class="sect2"><a href="#Calling_dispatcher">Calling dispatcher</a></span></dt></dl></dd><dt><span class="sect1"><a href="#Sample_implementations_for_the_Transport_Layer">Sample implementations for the Transport Layer</a></span></dt><dd><dl><dt><span class="sect2"><a href="#X_Transport">X Transport</a></span></dt></dl></dd><dt><span class="sect1"><a href="#References">References</a></span></dt></dl></dd></dl></div><div class="list-of-tables"><p><b>List of Tables</b></p><dl><dt>1.1. <a href="#transport_layer_functions_2">The Transport Layer Functions</a></dt><dt>1.2. <a href="#transport_layer_functions">The ClientMessage sent to the IMS window.</a></dt><dt>1.3. <a href="#clientmessage_sent_by_im_server">The ClientMessage sent by IM Server.</a></dt><dt>1.4. <a href="#readwrite_method_and_the_majorminor_transport_version">The read/write method and the major/minor-transport-version</a></dt><dt>1.5. <a href="#clientmessage_events_format_first_or_middle">The ClientMessage event's format (first or middle)</a></dt><dt>1.6. <a href="#clientmessage_events_format_only_or_last">The ClientMessage event's format (only or last)</a></dt><dt>1.7. <a href="#xchangeproperty_events_format">The XChangeProperty event's format</a></dt><dt>1.8. <a href="#clientmessage_events_format_to_send_atom_of_property">The ClientMessage event's format to send Atom of property</a></dt><dt>1.9. <a href="#clientmessage_events_format_first_or_middle_2">The ClientMessage event's format (first or middle)</a></dt><dt>1.10. <a href="#clientmessage_events_format_only_or_last_2">The ClientMessage event's format (only or last)</a></dt><dt>1.11. <a href="#xchangeproperty_events_format_b">The XChangeProperty event's format</a></dt><dt>1.12. <a href="#clientmessage_events_format_to_send_atom_of_property_2">The ClientMessage event's format to send Atom of property</a></dt></dl></div><div class="chapter" title="Chapter 1. X Transport Specification"><div class="titlepage"><div><div><h2 class="title"><a id="xim_transport_specification"></a>Chapter 1. X Transport Specification</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#Introduction">Introduction</a></span></dt><dt><span class="sect1"><a href="#Initialization">Initialization</a></span></dt><dd><dl><dt><span class="sect2"><a href="#Registering_structure_to_initialize">Registering structure to initialize</a></span></dt><dt><span class="sect2"><a href="#Initialization_function">Initialization function</a></span></dt></dl></dd><dt><span class="sect1"><a href="#The_interface_transport_layer_functions">The interface/transport layer functions</a></span></dt><dd><dl><dt><span class="sect2"><a href="#Opening_connection">Opening connection</a></span></dt><dt><span class="sect2"><a href="#Closing_connection">Closing connection</a></span></dt><dt><span class="sect2"><a href="#Writing_data">Writing data</a></span></dt><dt><span class="sect2"><a href="#Reading_data">Reading data</a></span></dt><dt><span class="sect2"><a href="#Flushing_buffer">Flushing buffer</a></span></dt><dt><span class="sect2"><a href="#Registering_asynchronous_data_handler">Registering asynchronous data handler</a></span></dt><dt><span class="sect2"><a href="#Calling_dispatcher">Calling dispatcher</a></span></dt></dl></dd><dt><span class="sect1"><a href="#Sample_implementations_for_the_Transport_Layer">Sample implementations for the Transport Layer</a></span></dt><dd><dl><dt><span class="sect2"><a href="#X_Transport">X Transport</a></span></dt></dl></dd><dt><span class="sect1"><a href="#References">References</a></span></dt></dl></div><div class="sect1" title="Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Introduction"></a>Introduction</h2></div></div></div><p>
+
+The Xlib XIM implementation is layered into three functions, a protocol
+layer, an interface layer and a transport layer. The purpose of this
+layering is to make the protocol independent of transport implementation.
+Each function of these layers are:
+
+</p><div class="variablelist"><dl><dt><span class="term"><span class="emphasis"><em>The protocol layer</em></span></span></dt><dd><p>
+implements overall function of XIM and calls the interface layer
+functions when it needs to communicate to IM Server.
+      </p></dd><dt><span class="term"><span class="emphasis"><em>The interface layer</em></span></span></dt><dd><p>
+separates the implementation of the transport layer from the protocol
+layer, in other words, it provides implementation independent hook for
+the transport layer functions.
+      </p></dd><dt><span class="term"><span class="emphasis"><em>The transport layer</em></span></span></dt><dd><p>
+handles actual data communication with IM Server. It is done by a set
+of several functions named transporters.
+      </p></dd></dl></div><p>
+This specification describes the interface layer and the transport
+layer, which makes various communication channels usable such as
+X protocol or, TCP/IP, DECnet, STREAM, etc., and provides
+the information needed for adding another new transport layer.
+In addition, sample implementations for the transporter using the
+X connection is described in section 4. 
+</p></div><div class="sect1" title="Initialization"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Initialization"></a>Initialization</h2></div></div></div><div class="sect2" title="Registering structure to initialize"><div class="titlepage"><div><div><h3 class="title"><a id="Registering_structure_to_initialize"></a>Registering structure to initialize</h3></div></div></div><p>
+The structure typed as TransportSW contains the list of the transport
+layer the specific implementations supports.
+</p><pre class="literallayout">
+typedef struct {
+      char *transport_name;
+      Bool (*config);
+} TransportSW;
+</pre><div class="informaltable"><table border="0"><colgroup><col /><col /></colgroup><tbody><tr><td><span class="emphasis"><em>transport_name</em></span></td><td>name of transport<sup>[<a id="id2971218" href="#ftn.id2971218" class="footnote">a</a>]</sup></td></tr><tr><td><span class="emphasis"><em>config</em></span></td><td>initial configuration function</td></tr></tbody><tbody class="footnotes"><tr><td colspan="2"><div class="footnote"><p><sup>[<a id="ftn.id2971218" href="#id2971218" class="para">a</a>] </sup>Refer to "The Input Method Protocol: Appendix B</p></div></td></tr></tbody></table></div><p>
+A sample entry for the Xlib supporting transporters is shown below:
+</p><pre class="literallayout">
+TransportSW _XimTransportRec[] = {
+/*     char <span class="emphasis"><em>*</em></span>:
+ *     transport_name,     Bool <span class="emphasis"><em>(*config)()</em></span>
+ */
+      "X",             _XimXConf,
+      "tcp",           _XimTransConf,
+      "local",         _XimTransConf,
+      "decnet",        _XimTransConf,
+      "streams",       _XimTransConf,
+      (char *)NULL,    (Bool (*)())NULL,
+};
+</pre></div><div class="sect2" title="Initialization function"><div class="titlepage"><div><div><h3 class="title"><a id="Initialization_function"></a>Initialization function</h3></div></div></div><p>
+The following function will be called once when Xlib configures the
+transporter functions.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">(*config)</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> *transport_data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>char<var class="pdparam"> *transport_data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>transport_data</em></span>
+    </span></dt><dd><p>
+Specifies the data specific to the transporter, in IM Server address.<sup>[<a id="id2970239" href="#ftn.id2970239" class="footnote">1</a>]</sup>
+    </p></dd></dl></div><p>
+This function must setup the transporter function pointers.
+</p><p>
+
+The actual <span class="emphasis"><em>config</em></span> function will be chosen by IM Server at the
+pre-connection time, matching by the <span class="emphasis"><em>transport_name</em></span> specified
+in the <code class="function">_XimTransportRec</code> array; The specific members of XimProto
+structure listed below must be initialized so that point they
+appropriate transporter functions.
+</p><p>
+If the specified transporter has been configured successfully, this
+function returns True. There is no Alternative Entry for config
+function itself.
+</p><p>
+The structure XimProto contains the following function pointers:
+</p><pre class="literallayout">
+Bool (*connect)();               /* Open connection */
+Bool (*shutdown)();              /* Close connection */
+Bool (*write)();                 /* Write data */
+Bool (*read)();                  /* Read data */
+Bool (*flush)();                 /* Flush data buffer */
+Bool (*register_dispatcher)();   /* Register asynchronous data handler */
+Bool (*call_dispatcher)();       /* Call dispatcher */
+</pre><p>
+These functions are called when Xlib needs to communicate the
+IM Server. These functions must process the appropriate procedure
+described below.
+</p></div></div><div class="sect1" title="The interface/transport layer functions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="The_interface_transport_layer_functions"></a>The interface/transport layer functions</h2></div></div></div><p>
+Following functions are used for the transport interface.
+</p><div class="table"><a id="transport_layer_functions_2"></a><p class="title"><b>Table 1.1. The Transport Layer Functions</b></p><div class="table-contents"><table summary="The Transport Layer Functions" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th align="center">Alternate Entry (Interface Layer)</th><th align="center">XimProto member (Transport Layer)</th><th align="center">Section</th></tr></thead><tbody><tr><td>_XimConnect</td><td>connect</td><td>3.1</td></tr><tr><td>_XimShutdown</td><td>shutdown</td><td>3.2</td></tr><tr><td>_XimWrite</td><td>write</td><td>3.3</td></tr><tr><td>_XimRead</td><td>read</td><td>3.4</td></tr><tr><td>_XimFlush</td><td>flush</td><td>3.5</td></tr><tr><td>_XimRegisterDispatcher</td><td>register_dispatcher</td><td>3.6</td></tr><tr><td>_XimCallDispatcher</td><td>call_dispatcher</td><td>3.7</td></tr></tbody></table></div></div><br class="table-break" /><p>
+The Protocol layer calls the above functions using the Alternative
+Entry in the left column. The transport implementation defines
+XimProto member function in the right column. The Alternative Entry is
+provided so as to make easier to implement the Protocol Layer.
+</p><div class="sect2" title="Opening connection"><div class="titlepage"><div><div><h3 class="title"><a id="Opening_connection"></a>Opening connection</h3></div></div></div><p>
+
+When <code class="function">XOpenIM</code> is called, the following function is called to connect
+with the IM Server.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">(*connect)</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div><p>
+This function must establishes the connection to the IM Server. If the
+connection is established successfully, this function returns True.
+The Alternative Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimConnect</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div></div><div class="sect2" title="Closing connection"><div class="titlepage"><div><div><h3 class="title"><a id="Closing_connection"></a>Closing connection</h3></div></div></div><p>
+
+When <code class="function">XCloseIM</code> is called, the following function is called to
+disconnect the connection with the IM Server. The Alternative Entry
+for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> (*shutdown)</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div><p>
+
+This function must close connection with the IM Server. If the
+connection is closed successfully, this function returns True. The
+Alternative Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">_XimShutdown</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div></div><div class="sect2" title="Writing data"><div class="titlepage"><div><div><h3 class="title"><a id="Writing_data"></a>Writing data</h3></div></div></div><p>
+The following function is called, when Xlib needs to write data to the
+IM Server.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimWrite</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>len</em></span>
+    </span></dt><dd><p>
+Specifies the length of writing data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>data</em></span>
+    </span></dt><dd><p>
+Specifies the writing data.
+    </p></dd></dl></div><p>
+This function writes the <span class="emphasis"><em>data</em></span> to the IM Server, regardless
+of the contents.  The number of bytes is passed to <span class="emphasis"><em>len</em></span>. The
+writing data is passed to <span class="emphasis"><em>data</em></span>. If data is sent successfully,
+the function returns True. Refer to "The Input Method Protocol" for
+the contents of the writing data. The Alternative Entry for this
+function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">_XimWrite</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>len</em></span>
+    </span></dt><dd><p>
+Specifies the length of writing data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>data</em></span>
+    </span></dt><dd><p>
+Specifies the writing data.
+    </p></dd></dl></div></div><div class="sect2" title="Reading data"><div class="titlepage"><div><div><h3 class="title"><a id="Reading_data"></a>Reading data</h3></div></div></div><p>
+The following function is called when Xlib waits for response from IM
+server synchronously.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimRead</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> read_buf</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> buf_len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> *ret_len</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>XPointer<var class="pdparam"> read_buf</var></code>;<br /><code>int<var class="pdparam"> buf_len</var></code>;<br /><code>int<var class="pdparam"> *ret_len</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>read_buf</em></span>
+    </span></dt><dd><p>
+Specifies the buffer to store data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>buf_len</em></span>
+    </span></dt><dd><p>
+Specifies the size of the <span class="emphasis"><em>buffer</em></span>
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>ret_len</em></span>
+    </span></dt><dd><p>
+Specifies the length of stored data.
+      </p></dd></dl></div><p>
+This function stores the read data in <span class="emphasis"><em>read_buf</em></span>, which size is
+specified as <span class="emphasis"><em>buf_len</em></span>. The size of data is set to <span class="emphasis"><em>ret_len</em></span>.
+This function return True, if the data is read normally or reading
+data is completed.
+</p><p>
+The Alternative Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimRead</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> *ret_len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> buf</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> buf_len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> (*predicate)()</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> predicate_arg</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> *ret_len</var></code>;<br /><code>XPointer<var class="pdparam"> buf</var></code>;<br /><code>int<var class="pdparam"> buf_len</var></code>;<br /><code>Bool<var class="pdparam"> (*predicate)()</var></code>;<br /><code>XPointer<var class="pdparam"> predicate_arg</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>ret_len</em></span>
+    </span></dt><dd><p>
+Specifies the size of the <span class="emphasis"><em>data</em></span> buffer.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>buf</em></span>
+    </span></dt><dd><p>
+Specifies the buffer to store data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>buf_len</em></span>
+    </span></dt><dd><p>
+Specifies the length of <span class="emphasis"><em>buffer</em></span>.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>predicate</em></span>
+    </span></dt><dd><p>
+Specifies the predicate for the XIM data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>predicate_arg</em></span>
+    </span></dt><dd><p>
+Specifies the predicate specific data.
+
+    </p></dd></dl></div><p>
+The predicate procedure indicates whether the <span class="emphasis"><em>data</em></span> is for the
+XIM or not. <span class="emphasis"><em>len</em></span>
+This function stores the read data in <span class="emphasis"><em>buf</em></span>, which size
+is specified as <span class="emphasis"><em>buf_len</em></span>. The size of data is set to
+<span class="emphasis"><em>ret_len</em></span>.  If <span class="emphasis"><em>preedicate()</em></span>
+returns True, this function returns True.  If not, it calls the registered callback function.
+</p><p>
+The procedure and its arguments are:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">(*predicate)</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> data</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> predicate_arg</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> data</var></code>;<br /><code>XPointer<var class="pdparam"> predicate_arg</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>len</em></span>
+    </span></dt><dd><p>
+Specifies the size of the <span class="emphasis"><em>data</em></span> buffer.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>data</em></span>
+    </span></dt><dd><p>
+Specifies the buffer to store data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>predicate_arg</em></span>
+    </span></dt><dd><p>
+Specifies the predicate specific data.
+      </p></dd></dl></div></div><div class="sect2" title="Flushing buffer"><div class="titlepage"><div><div><h3 class="title"><a id="Flushing_buffer"></a>Flushing buffer</h3></div></div></div><p>
+The following function is called when Xlib needs to flush the data.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc">(*flush)</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div><p>
+This function must flush the data stored in internal buffer on the
+transport layer. If data transfer is completed, the function returns
+True.  The Alternative Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">void <b class="fsfunc"> _XimFlush</b>(</code></td><td><var class="pdparam"> im</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd></dl></div></div><div class="sect2" title="Registering asynchronous data handler"><div class="titlepage"><div><div><h3 class="title"><a id="Registering_asynchronous_data_handler"></a>Registering asynchronous data handler</h3></div></div></div><p>
+Xlib needs to handle asynchronous response from IM Server. This is
+because some of the XIM data occur asynchronously to X events.
+</p><p>
+Those data will be handled in the <span class="emphasis"><em>Filter</em></span>,
+and the <span class="emphasis"><em>Filter</em></span>
+will call asynchronous data handler in the protocol layer. Then it
+calls dispatchers in the transport layer. The dispatchers are
+implemented by the protocol layer. This function must store the
+information and prepare for later call of the dispatchers using
+<code class="function">_XimCallDispatcher</code>.
+</p><p>
+When multiple dispatchers are registered, they will be called
+sequentially in order of registration, on arrival of asynchronous
+data. The register_dispatcher is declared as following:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">(*register_dispatcher)</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> (*dispatcher)()</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> call_data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>Bool<var class="pdparam"> (*dispatcher)()</var></code>;<br /><code>XPointer<var class="pdparam"> call_data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>dispatcher</em></span>
+    </span></dt><dd><p>
+Specifies the dispatcher function to register.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>call_data</em></span>
+    </span></dt><dd><p>
+Specifies a parameter for the <span class="emphasis"><em>dispatcher</em></span>.
+    </p></dd></dl></div><p>
+The dispatcher is a function of the following type:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">(*dispatcher)</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> data</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> call_data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> data</var></code>;<br /><code>XPointer<var class="pdparam"> call_data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>len</em></span>
+    </span></dt><dd><p>
+Specifies the size of the <span class="emphasis"><em>data</em></span> buffer.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>data</em></span>
+    </span></dt><dd><p>
+Specifies the buffer to store data.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>call_data</em></span>
+    </span></dt><dd><p>
+Specifies a parameter passed to the register_dispatcher.
+      </p></dd></dl></div><p>
+The dispatcher is provided by the protocol layer. They are called once
+for every asynchronous data, in order of registration. If the data is
+used, it must return True. otherwise, it must return False.
+</p><p>
+If the dispatcher function returns True, the Transport Layer assume
+that the data has been processed by the upper layer.  The Alternative
+Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimRegisterDispatcher</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> (*dispatcher)()</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> call_data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>Bool<var class="pdparam"> (*dispatcher)()</var></code>;<br /><code>XPointer<var class="pdparam"> call_data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>dispatcher</em></span>
+    </span></dt><dd><p>
+Specifies the dispatcher function to register.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>call_data</em></span>
+    </span></dt><dd><p>
+Specifies a parameter for the <span class="emphasis"><em>dispatcher</em></span>.
+      </p></dd></dl></div></div><div class="sect2" title="Calling dispatcher"><div class="titlepage"><div><div><h3 class="title"><a id="Calling_dispatcher"></a>Calling dispatcher</h3></div></div></div><p>
+The following function is used to call the registered dispatcher
+function, when the asynchronous response from IM Server has arrived.
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc">(*call_dispatcher)</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> data</var></code>;</div><div class="funcprototype-spacer"> </div></div><div class="variablelist"><dl><dt><span class="term">
+      <span class="emphasis"><em>im</em></span>
+    </span></dt><dd><p>
+Specifies XIM structure address.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>len</em></span>
+    </span></dt><dd><p>
+Specifies the size of <span class="emphasis"><em>data</em></span> buffer.
+      </p></dd><dt><span class="term">
+      <span class="emphasis"><em>data</em></span>
+    </span></dt><dd><p>
+Specifies the buffer to store data.
+      </p></dd></dl></div><p>
+The call_dispatcher must call the dispatcher function, in order of
+their registration. <span class="emphasis"><em>len</em></span> and <span class="emphasis"><em>data</em></span> are the data passed to
+register_dispatcher.
+</p><p>
+The return values are checked at each invocation, and if it finds
+True, it immediately return with true for its return value.
+</p><p>
+It is depend on the upper layer whether the read data is XIM
+Protocol packet unit or not.
+The Alternative Entry for this function is:
+</p><div class="funcsynopsis"><table border="0" summary="Function synopsis" cellspacing="0" cellpadding="0" class="funcprototype-table"><tr><td><code class="funcdef">Bool <b class="fsfunc"> _XimCallDispatcher</b>(</code></td><td><var class="pdparam"> im</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> len</var>, </td><td> </td></tr><tr><td> </td><td><var class="pdparam"> call_data</var><code>)</code>;</td><td> </td></tr></table><div class="paramdef-list"><code>XIM<var class="pdparam"> im</var></code>;<br /><code>INT16<var class="pdparam"> len</var></code>;<br /><code>XPointer<var class="pdparam"> call_data</var></code>;</div><div class="funcprototype-spacer"> </div></div></div></div><div class="sect1" title="Sample implementations for the Transport Layer"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Sample_implementations_for_the_Transport_Layer"></a>Sample implementations for the Transport Layer</h2></div></div></div><p>
+Sample implementations for the transporter using the X connection is
+described here.
+</p><div class="sect2" title="X Transport"><div class="titlepage"><div><div><h3 class="title"><a id="X_Transport"></a>X Transport</h3></div></div></div><p>
+At the beginning of the X Transport connection for the XIM transport
+mechanism, two different windows must be created either in an Xlib XIM
+or in an IM Server, with which the Xlib and the IM Server exchange the
+XIM transports by using the ClientMessage events and Window Properties.
+In the following, the window created by the Xlib is referred as the
+"client communication window", and on the other hand, the window created
+by the IM Server is referred as the "IMS communication window".
+</p><div class="sect3" title="Connection"><div class="titlepage"><div><div><h4 class="title"><a id="Connection"></a>Connection</h4></div></div></div><p>
+In order to establish a connection, a communication window is created.
+A ClientMessage in the following event's format is sent to the owner
+window of XIM_SERVER selection, which the IM Server has created.
+</p><p>
+
+Refer to "The Input Method Protocol" for the XIM_SERVER atom.
+</p><div class="table"><a id="transport_layer_functions"></a><p class="title"><b>Table 1.2. The ClientMessage sent to the IMS window.</b></p><div class="table-contents"><table summary="The ClientMessage sent to the IMS window." border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_CONNECT", false)</td></tr><tr><td>int</td><td>format</td><td>32</td></tr><tr><td>long</td><td>data.1[0]</td><td>client communication window ID</td></tr><tr><td>long</td><td>data.1[1]</td><td>client-major-transport-version(*1)</td></tr><tr><td>long</td><td>data.1[2]</td><td>client-major-transport-version(*1)</td></tr></tbody></table></div></div><br class="table-break" /><p>
+In order to establish the connection (to notify the IM Server communication
+window), the IM Server sends a ClientMessage in the following event's
+format to the client communication window.
+</p><div class="table"><a id="clientmessage_sent_by_im_server"></a><p class="title"><b>Table 1.3. The ClientMessage sent by IM Server.</b></p><div class="table-contents"><table summary="The ClientMessage sent by IM Server." border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_CONNECT", false)</td></tr><tr><td>int</td><td>format</td><td>32</td></tr><tr><td>long</td><td>data.1[0]</td><td>client communication window ID</td></tr><tr><td>long</td><td>data.1[1]</td><td>client-major-transport-version(*1)</td></tr><tr><td>long</td><td>data.1[2]</td><td>client-major-transport-version(*1)</td></tr><tr><td>long</td><td>data.1[3]</td><td>dividing size between ClientMessage and Property(*2)</td></tr></tbody></table></div></div><br class="table-break" /><p>
+(*1) major/minor-transport-version
+</p><p>
+The read/write method is decided by the combination of
+major/minor-transport-version, as follows:
+</p><div class="table"><a id="readwrite_method_and_the_majorminor_transport_version"></a><p class="title"><b>Table 1.4. The read/write method and the major/minor-transport-version</b></p><div class="table-contents"><table summary="The read/write method and the major/minor-transport-version" border="1"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="center">Transport-version</th><th>read/write</th></tr><tr><th>major</th><th>minor</th><th> </th></tr></thead><tbody><tr><td rowspan="3">0</td><td>0</td><td>only-CM &amp; Property-with-CM</td></tr><tr><td>1</td><td>only-CM &amp; multi-CM</td></tr><tr><td>2</td><td>only-CM &amp; multi-CM &amp; Property-with-CM</td></tr><tr><td>1</td><td>0</td><td>PropertyNotify</td></tr><tr><td rowspan="2">2</td><td>0</td><td>only-CM &amp; PropertyNotify</td></tr><tr><td>1</td><td>only-CM &amp; multi-CM &amp; PropertyNotify</td></tr></tbody></table></div></div><br class="table-break" /><pre class="literallayout">
+only-CM            :    data is sent via a ClientMessage
+multi-CM           :    data is sent via multiple ClientMessages
+Property-with-CM   :    data is written in Property, and its Atom
+                        is send via ClientMessage
+PropertyNotify     :    data is written in Property, and its Atom
+                        is send via PropertyNotify
+
+</pre><p>
+The method to decide major/minor-transport-version is as follows:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+The client sends 0 as major/minor-transport-version to the IM Server.
+The client must support all methods in Table 4-3. 
+The client may send another number as major/minor-transport-version to
+use other method than the above in the future.
+    </p></li><li class="listitem"><p>
+The IM Server sends its major/minor-transport-version number to
+the client. The client sends data using the method specified by the
+IM Server.
+    </p></li><li class="listitem"><p>
+If major/minor-transport-version number is not available, it is regarded
+as 0.
+    </p></li></ul></div><p>
+(*2) dividing size between ClientMessage and Property
+</p><p>
+If data is sent via both of multi-CM and Property, specify the dividing
+size between ClientMessage and Property. The data, which is smaller than
+this size, is sent via multi-CM (or only-CM), and the data, which is
+lager than this size, is sent via Property.
+</p></div><div class="sect3" title="read/write"><div class="titlepage"><div><div><h4 class="title"><a id="read_write_"></a>read/write  </h4></div></div></div><p>
+The data is transferred via either ClientMessage or Window Property in
+the X Window System.
+</p><div class="sect4" title="Format for the data from the Client to the IM Server"><div class="titlepage"><div><div><h5 class="title"><a id="Format_for_the_data_from_the_Client_to_the_IM_Server"></a>Format for the data from the Client to the IM Server</h5></div></div></div><p>
+<span class="bold"><strong>ClientMessage</strong></span>
+</p><p>
+If data is sent via ClientMessage event, the format is as follows:
+</p><div class="table"><a id="clientmessage_events_format_first_or_middle"></a><p class="title"><b>Table 1.5. The ClientMessage event's format (first or middle)</b></p><div class="table-contents"><table summary="The ClientMessage event's format (first or middle)" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_MOREDATA", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>char</td><td>data.b[20]</td><td>(read/write DATA : 20 byte)</td></tr></tbody></table></div></div><br class="table-break" /><div class="table"><a id="clientmessage_events_format_only_or_last"></a><p class="title"><b>Table 1.6. The ClientMessage event's format (only or last)</b></p><div class="table-contents"><table summary="The ClientMessage event's format (only or last)" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_PROTOCOL", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>char</td><td>data.b[20]</td><td>(read/write DATA : MAX 20 byte)
+<sup>[<a id="id3029549" href="#ftn.id3029549" class="footnote">a</a>]</sup>
+      </td></tr></tbody><tbody class="footnotes"><tr><td colspan="3"><div class="footnote"><p><sup>[<a id="ftn.id3029549" href="#id3029549" class="para">a</a>] </sup>If the data is smaller
+than 20 bytes, all data other than available data must be 0.
+</p></div></td></tr></tbody></table></div></div><br class="table-break" /><p>
+<span class="bold"><strong>Property</strong></span>
+</p><p>
+In the case of large data, data will be sent via the Window Property
+for the efficiency.  There are the following two methods to notify
+Property, and transport-version is decided which method is used.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+The XChangeProperty function is used to store data in the client
+communication window, and Atom of the stored data is notified to the
+IM Server via ClientMessage event.
+    </p></li><li class="listitem"><p>
+The XChangeProperty function is used to store data in the client
+communication window, and Atom of the stored data is notified to the
+IM Server via PropertyNotify event.
+    </p></li></ul></div><p>
+The arguments of the XChangeProperty are as follows:
+</p><div class="table"><a id="xchangeproperty_events_format"></a><p class="title"><b>Table 1.7. The XChangeProperty event's format</b></p><div class="table-contents"><table summary="The XChangeProperty event's format" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Argument</th><th align="left">Contents</th></tr></thead><tbody><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS communication window ID</td></tr><tr><td>Atom</td><td>property</td><td>read/write property Atom (*1)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>int</td><td>mode</td><td>PropModeAppend</td></tr><tr><td>u_char</td><td>*data</td><td>read/write DATA</td></tr><tr><td>int</td><td>nelements</td><td>length of DATA</td></tr></tbody></table></div></div><br class="table-break" /><p>
+(*1) The read/write property ATOM allocates the following strings by
+<code class="function">XInternAtom</code>.
+"_clientXXX"
+</p><p>
+The client changes the property with the mode of PropModeAppend and
+the IM Server will read it with the delete mode i.e. (delete = True).
+</p><p>
+If Atom is notified via ClientMessage event, the format of the ClientMessage
+is as follows:
+</p><div class="table"><a id="clientmessage_events_format_to_send_atom_of_property"></a><p class="title"><b>Table 1.8. The ClientMessage event's format to send Atom of property</b></p><div class="table-contents"><table summary="The ClientMessage event's format to send Atom of property" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_PROTOCOL", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>long</td><td>data.1[0]</td><td>length of read/write property Atom</td></tr><tr><td>long</td><td>data.1[1]</td><td>read/write property Atom</td></tr></tbody></table></div></div><br class="table-break" /></div><div class="sect4" title="Format for the data from the IM Server to the Client"><div class="titlepage"><div><div><h5 class="title"><a id="Format_for_the_data_from_the_IM_Server_to_the_Client"></a>Format for the data from the IM Server to the Client</h5></div></div></div><p>
+<span class="bold"><strong>ClientMessage</strong></span>
+</p><p>
+The format of the ClientMessage is as follows:
+</p><div class="table"><a id="clientmessage_events_format_first_or_middle_2"></a><p class="title"><b>Table 1.9. The ClientMessage event's format (first or middle)</b></p><div class="table-contents"><table summary="The ClientMessage event's format (first or middle)" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_MOREDATA", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>char</td><td>data.b[20]</td><td>(read/write DATA : 20 byte)</td></tr></tbody></table></div></div><br class="table-break" /><div class="table"><a id="clientmessage_events_format_only_or_last_2"></a><p class="title"><b>Table 1.10. The ClientMessage event's format (only or last)</b></p><div class="table-contents"><table summary="The ClientMessage event's format (only or last)" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_PROTOCOL", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>char</td><td>data.b[20]</td><td>(read/write DATA : MAX 20 byte) (*1)</td></tr></tbody></table></div></div><br class="table-break" /><p>
+(*1) If the data size is smaller than 20 bytes, all data other than available
+data must be 0.
+</p><p>
+<span class="bold"><strong>Property</strong></span>
+</p><p>
+In the case of large data, data will be sent via the Window Property
+for the efficiency. There are the following two methods to notify
+Property, and transport-version is decided which method is used.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+The XChangeProperty function is used to store data in the IMS
+communication window, and Atom of the property is sent via the
+ClientMessage event.
+    </p></li><li class="listitem"><p>
+The XChangeProperty function is used to store data in the IMS
+communication window, and Atom of the property is sent via
+PropertyNotify event.
+    </p></li></ul></div><p>
+The arguments of the XChangeProperty are as follows:
+</p><div class="table"><a id="xchangeproperty_events_format_b"></a><p class="title"><b>Table 1.11. The XChangeProperty event's format</b></p><div class="table-contents"><table summary="The XChangeProperty event's format" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Argument</th><th align="left">Contents</th></tr></thead><tbody><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS communication window ID</td></tr><tr><td>Atom</td><td>property</td><td>read/write property Atom (*1)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>int</td><td>mode</td><td>PropModeAppend</td></tr><tr><td>u_char</td><td>*data</td><td>read/write DATA</td></tr><tr><td>int</td><td>nelements</td><td>length of DATA</td></tr></tbody></table></div></div><br class="table-break" /><p>
+(*1) The read/write property ATOM allocates some strings, which are not
+allocated by the client, by <code class="function">XInternAtom</code>.
+</p><p>
+The IM Server changes the property with the mode of PropModeAppend and
+the client reads it with the delete mode, i.e. (delete = True).
+</p><p>
+If Atom is notified via ClientMessage event, the format of the ClientMessage
+is as follows:
+</p><div class="table"><a id="clientmessage_events_format_to_send_atom_of_property_2"></a><p class="title"><b>Table 1.12. The ClientMessage event's format to send Atom of property</b></p><div class="table-contents"><table summary="The ClientMessage event's format to send Atom of property" border="0"><colgroup><col /><col /><col /></colgroup><thead><tr><th colspan="2" align="left">Structure Member</th><th align="left">Contents</th></tr></thead><tbody><tr><td>int</td><td>type</td><td>ClientMessage</td></tr><tr><td>u_long</td><td>serial</td><td>Set by the X Window System</td></tr><tr><td>Bool</td><td>send_event</td><td>Set by the X Window System</td></tr><tr><td>Display</td><td>*display</td><td>The display to which connects</td></tr><tr><td>Window</td><td>window</td><td>IMS Window ID</td></tr><tr><td>Atom</td><td>message_type</td><td>XInternAtom(display, "_XIM_PROTOCOL", False)</td></tr><tr><td>int</td><td>format</td><td>8</td></tr><tr><td>long</td><td>data.1[0]</td><td>length of read/write property Atom</td></tr><tr><td>long</td><td>data.1[1]</td><td>read/write property Atom</td></tr></tbody></table></div></div><br class="table-break" /></div></div><div class="sect3" title="Closing Connection"><div class="titlepage"><div><div><h4 class="title"><a id="Closing_Connection"></a>Closing Connection</h4></div></div></div><p>
+If the client disconnect with the IM Server, shutdown function should
+free the communication window properties and etc..
+</p></div></div></div><div class="sect1" title="References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="References"></a>References</h2></div></div></div><p>
+[1] Masahiko Narita and Hideki Hiura, <span class="emphasis"><em>"The Input Method Protocol"</em></span>
+</p></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.id2970239" href="#id2970239" class="para">1</a>] </sup>Refer to "The Input Method Protocol: Appendix B</p></div></div></div></div></body></html>

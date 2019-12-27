@@ -1,0 +1,64 @@
+#!/bin/sh
+#@Title         PowerVR SGX DDK for Embedded Linux 
+#@Copyright     Copyright (c) Imagination Technologies Ltd. All Rights Reserved
+#@License       Strictly Confidential.
+
+# Auto-generated for omap4430_linux from build: sgxddk_1.9@2188537
+#
+
+load_pvr()
+{
+	# Start the X Server. 
+	# The X Server will load the PVR Services module.
+	#
+	/usr/local/XSGX/bin/X -verbose -config /usr/local/XSGX/etc/xorg.conf &
+
+	# Load remaining modules.
+	#
+				
+	echo "Loaded PowerVR consumer services."
+	return 0;
+}
+
+unload_pvr()
+{
+	# Unload modules.  This won't pick up cases where a further module
+	# has been added which has a dependency on one of these modules.
+	#
+
+	# Stop the X Server.
+	#
+	[ -f /tmp/.X0-lock ] && read XPID < /tmp/.X0-lock && [ -n "$XPID" ] && kill $XPID && while [ -e /proc/$XPID ] ; do sleep 1; done
+
+	# Unload the PVR Services module.
+	#
+	if rmmod pvrsrvkm; then :; else return 1; fi
+	if rmmod drm.ko; then :; else return 1; fi
+
+	echo "Unloaded PowerVR consumer services."
+	return 0;
+}
+
+# Deal with the type of invocation we get.
+#
+case "$1" in
+"start")
+	load_pvr
+	;;
+stop)
+	if ! unload_pvr; then
+		echo "Couldn't unload modules" >&2;
+	fi
+	;;
+reload|restart)
+	if unload_pvr; then
+		load_pvr
+	else
+		echo "Couldn't unload modules" >&2;
+	fi
+	;;
+*)
+	echo "$0: unknown argument $1." >&2;
+	;;
+esac
+
