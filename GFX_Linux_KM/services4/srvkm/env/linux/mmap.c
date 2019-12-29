@@ -68,6 +68,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 #if defined(SUPPORT_DRI_DRM)
 #include <drm/drmP.h>
+#include "drm/drm_legacy.h"
 #endif
 
 #include "services_headers.h"
@@ -1029,7 +1030,7 @@ PVRMMap(struct file* pFile, struct vm_area_struct* ps_vma)
 
 #if !defined(SUPPORT_DRI_DRM_EXT)
         /* Pass unknown requests onto the DRM module */
-        return drm_mmap(pFile, ps_vma);
+        return drm_legacy_mmap(pFile, ps_vma);
 #else
         /*
          * Indicate to caller that the request is not for us.

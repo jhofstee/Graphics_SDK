@@ -58,6 +58,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <asm/ioctl.h>
 #include <drm/drmP.h>
 #include <drm/drm.h>
+#include <drm/drm_ioctl.h>
 
 #include "img_defs.h"
 #include "services.h"
@@ -225,7 +226,7 @@ exit:
 	return iRes;
 }
 
-DRI_DRM_STATIC int
+DRI_DRM_STATIC void
 PVRSRVDrmUnload(struct drm_device *dev)
 {
 	PVR_TRACE(("PVRSRVDrmUnload"));
@@ -239,8 +240,6 @@ PVRSRVDrmUnload(struct drm_device *dev)
 #if defined(PDUMP)
 	dbgdrv_cleanup();
 #endif
-
-	return 0;
 }
 
 DRI_DRM_STATIC int
@@ -421,26 +420,20 @@ PVRSRVPciRemove(struct pci_dev *dev)
 
 #if !defined(SUPPORT_DRI_DRM_EXT)
 
-#if defined(DRM_IOCTL_DEF)
-#define	PVR_DRM_IOCTL_DEF(ioctl, _func, _flags) DRM_IOCTL_DEF(DRM_##ioctl, _func, _flags)
-#else
-#define	PVR_DRM_IOCTL_DEF(ioctl, _func, _flags) DRM_IOCTL_DEF_DRV(ioctl, _func, _flags)
-#endif
-
-struct drm_ioctl_desc sPVRDrmIoctls[] = {
-	PVR_DRM_IOCTL_DEF(PVR_SRVKM, PVRSRV_BridgeDispatchKM, PVR_DRM_UNLOCKED),
-	PVR_DRM_IOCTL_DEF(PVR_IS_MASTER, PVRDRMIsMaster, DRM_MASTER | PVR_DRM_UNLOCKED),
-	PVR_DRM_IOCTL_DEF(PVR_UNPRIV, PVRDRMUnprivCmd, PVR_DRM_UNLOCKED),
+static const struct drm_ioctl_desc sPVRDrmIoctls[] = {
+	DRM_IOCTL_DEF_DRV(PVR_SRVKM, PVRSRV_BridgeDispatchKM, DRM_RENDER_ALLOW | PVR_DRM_UNLOCKED),
+	DRM_IOCTL_DEF_DRV(PVR_IS_MASTER, PVRDRMIsMaster, DRM_RENDER_ALLOW | DRM_MASTER | PVR_DRM_UNLOCKED),
+	DRM_IOCTL_DEF_DRV(PVR_UNPRIV, PVRDRMUnprivCmd, DRM_RENDER_ALLOW | PVR_DRM_UNLOCKED),
 #if defined(PDUMP)
-	PVR_DRM_IOCTL_DEF(PVR_DBGDRV, dbgdrv_ioctl, PVR_DRM_UNLOCKED),
+	DRM_IOCTL_DEF_DRV(PVR_DBGDRV, dbgdrv_ioctl, DRM_RENDER_ALLOW | PVR_DRM_UNLOCKED),
 #endif
 #if defined(DISPLAY_CONTROLLER) && defined(PVR_DISPLAY_CONTROLLER_DRM_IOCTL)
-	PVR_DRM_IOCTL_DEF(PVR_DISP, PVRDRM_Display_ioctl, DRM_MASTER | PVR_DRM_UNLOCKED)
+	DRM_IOCTL_DEF_DRV(PVR_DISP, PVRDRM_Display_ioctl, DRM_MASTER | PVR_DRM_UNLOCKED),
 #endif
 };
 
 #if !defined(SUPPORT_DRI_DRM_PLUGIN)
-static int pvr_max_ioctl = DRM_ARRAY_SIZE(sPVRDrmIoctls);
+static int pvr_max_ioctl = ARRAY_SIZE(sPVRDrmIoctls);
 #endif
 
 #if defined(PVR_DRI_DRM_PLATFORM_DEV) && !defined(SUPPORT_DRI_DRM_EXT) && \
@@ -461,7 +454,6 @@ static const struct file_operations drmdriv_fops = {
                 PVR_DRM_FOPS_IOCTL = drm_ioctl,
                 .mmap = PVRMMap,
                 .poll = drm_poll,
-                .fasync = drm_fasync,
 };
 #endif
 
@@ -486,9 +478,9 @@ static PVRSRV_DRM_PLUGIN sPVRDrmPlugin =
 static struct drm_driver sPVRDrmDriver = 
 {
 #if defined(PVR_OLD_STYLE_DRM_PLATFORM_DEV)
-	.driver_features = DRIVER_USE_PLATFORM_DEVICE,
+	.driver_features = DRIVER_USE_PLATFORM_DEVICE | DRIVER_LEGACY,
 #else
-	.driver_features = 0,
+	.driver_features = DRIVER_LEGACY,
 #endif
 	.dev_priv_size = 0,
 	.load = PVRSRVDrmLoad,
@@ -496,10 +488,6 @@ static struct drm_driver sPVRDrmDriver =
 	.open = PVRSRVDrmOpen,
 #if defined(PVR_DRI_DRM_USE_POST_CLOSE)
 	.postclose = PVRSRVDrmPostClose,
-#endif
-#if !defined(PVR_DRI_DRM_PLATFORM_DEV) && !defined(SUPPORT_DRM_MODESET)
-	.suspend = PVRSRVDriverSuspend,
-	.resume = PVRSRVDriverResume,
 #endif
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37))
 	.get_map_ofs = drm_core_get_map_ofs,
@@ -519,7 +507,6 @@ static struct drm_driver sPVRDrmDriver =
 		PVR_DRM_FOPS_IOCTL = drm_ioctl,
 		.mmap = PVRMMap,
 		.poll = drm_poll,
-		.fasync = drm_fasync,
 	},
 #else
 	.fops = &drmdriv_fops,
@@ -677,7 +664,7 @@ static int __init PVRSRVDrmInit(void)
 #if defined(PVR_DRI_DRM_PLATFORM_DEV)
 	iRes = drm_platform_init(&sPVRDrmDriver, gpsPVRLDMDev);
 #else
-	iRes = drm_pci_init(&sPVRDrmDriver, &sPVRPCIDriver);
+	iRes = drm_legacy_pci_init(&sPVRDrmDriver, &sPVRPCIDriver);
 #endif
 #else	/* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)) */
 	iRes = drm_init(&sPVRDrmDriver);
@@ -709,7 +696,7 @@ static void __exit PVRSRVDrmExit(void)
 #if defined(PVR_DRI_DRM_PLATFORM_DEV)
 	drm_platform_exit(&sPVRDrmDriver, gpsPVRLDMDev);
 #else
-	drm_pci_exit(&sPVRDrmDriver, &sPVRPCIDriver);
+	drm_legacy_pci_exit(&sPVRDrmDriver, &sPVRPCIDriver);
 #endif
 #else	/* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,39)) */
 	drm_exit(&sPVRDrmDriver);
