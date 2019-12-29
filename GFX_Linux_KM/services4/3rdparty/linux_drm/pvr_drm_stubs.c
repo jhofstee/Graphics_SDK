@@ -49,7 +49,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/pci.h>
-#include <asm/system.h>
 
 #include "pvr_drm_mod.h"
 
@@ -76,6 +75,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 static struct pci_bus pvr_pci_bus;
 static struct pci_dev pvr_pci_dev;
+struct bus_type pci_bus_type;
 
 static bool bDeviceIsRegistered;
 
@@ -212,6 +212,11 @@ pci_enable_device(struct pci_dev *dev)
 	return 0;
 }
 
+int pci_find_capability(struct pci_dev *dev, int cap)
+{
+	return 0;
+}
+
 void
 __bad_cmpxchg(volatile void *ptr, int size)
 {
@@ -219,3 +224,11 @@ __bad_cmpxchg(volatile void *ptr, int size)
 		__FUNCTION__, ptr, size);
 }
 
+void
+__bad_xchg(volatile void *ptr, int size)
+{
+	printk(KERN_ERR "%s: ptr %p size %u\n",
+		__FUNCTION__, ptr, size);
+	BUG();
+}
+EXPORT_SYMBOL(__bad_xchg);
