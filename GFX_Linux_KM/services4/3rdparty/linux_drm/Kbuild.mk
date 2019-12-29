@@ -43,8 +43,7 @@ $(call must-be-defined,$(SUPPORT_DRI_DRM))
 DRM_SOURCE_DIR := drivers/gpu/drm
 
 ccflags-y += \
-	 -I$(KERNELDIR)/include/drm \
-	 -I$(DRM_SOURCE_DIR)
+	 -I$(KERNELDIR)/drivers/gpu/drm
 
 drm-y += \
 	services4/3rdparty/linux_drm/pvr_drm_stubs.o \

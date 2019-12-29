@@ -13,7 +13,6 @@ EXT_SOURCE_DIR := $(KERNELDIR)/drivers/gpu/drm
 EXTRA_CFLAGS =	-DLINUX \
 		-DCONFIG_PCI \
 		-Wno-error \
-		-I$(KERNELDIR)/include/drm \
 		-I$(KERNELDIR)/include/linux \
 		-I$(EXT_SOURCE_DIR) \
 		$(SYS_CFLAGS.1) \
