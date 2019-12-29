@@ -123,7 +123,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define	PVR_DEBUG DEBUG
 #undef DEBUG
 #endif
-#include <omapfb/omapfb.h>
+#include <../drivers/video/fbdev/omap2/omapfb/omapfb.h>
 #if defined(DEBUG)
 #undef DEBUG
 #endif
