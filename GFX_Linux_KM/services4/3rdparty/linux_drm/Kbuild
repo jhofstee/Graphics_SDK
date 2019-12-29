@@ -25,35 +25,58 @@ endif
 endif
 
 obj-m := drm.o
-ifeq ($(TI_PLATFORM),omap4)
-drm-y := pvr_drm_stubs.o drm_auth.o drm_bufs.o drm_cache.o drm_context.o drm_dma.o drm_drawable.o drm_drv.o drm_fops.o drm_gem.o drm_ioctl.o drm_irq.o \
-	drm_lock.o drm_memory.o drm_proc.o drm_stub.o drm_vm.o \
-	drm_agpsupport.o drm_scatter.o ati_pcigart.o drm_pci.o \
-	drm_sysfs.o drm_hashtab.o drm_sman.o drm_mm.o \
-	drm_crtc.o drm_modes.o drm_edid.o \
-	drm_info.o drm_debugfs.o drm_encoder_slave.o
-else
-drm-y := pvr_drm_stubs.o drm_auth.o drm_bufs.o drm_cache.o drm_context.o drm_dma.o drm_drv.o drm_fops.o drm_gem.o drm_ioctl.o drm_irq.o \
-	drm_lock.o drm_memory.o drm_proc.o drm_stub.o drm_vm.o \
-	drm_agpsupport.o drm_scatter.o ati_pcigart.o drm_pci.o \
-	drm_sysfs.o drm_hashtab.o drm_sman.o drm_mm.o \
-	drm_crtc.o drm_modes.o drm_edid.o \
-	drm_info.o drm_debugfs.o drm_encoder_slave.o drm_global.o drm_platform.o drm_trace_points.o
-endif
-
-# For greater than/equal to 3.4 kernel
-#drm-y := pvr_drm_stubs.o drm_auth.o drm_bufs.o drm_cache.o drm_context.o drm_dma.o drm_drv.o drm_fops.o drm_gem.o drm_ioctl.o drm_irq.o \
-#	drm_lock.o drm_memory.o drm_proc.o drm_stub.o drm_vm.o \
-#	drm_agpsupport.o drm_scatter.o ati_pcigart.o drm_pci.o \
-#	drm_sysfs.o drm_hashtab.o drm_sman.o drm_mm.o \
-#	drm_crtc.o drm_modes.o drm_edid.o \
-#	drm_info.o drm_debugfs.o drm_encoder_slave.o drm_global.o drm_platform.o drm_trace_points.o drm_prime.o
-
-# less than 2.6.32 kernel
-
-#drm-y := pvr_drm_stubs.o drm_auth.o drm_bufs.o drm_cache.o drm_context.o drm_dma.o drm_drawable.o drm_drv.o drm_fops.o drm_gem.o drm_ioctl.o drm_irq.o \
-#        drm_lock.o drm_memory.o drm_proc.o drm_stub.o drm_vm.o \
-#        drm_agpsupport.o drm_scatter.o ati_pcigart.o drm_pci.o \
-#        drm_sysfs.o drm_hashtab.o drm_sman.o drm_mm.o \
-#        drm_crtc.o drm_modes.o drm_edid.o \
-#        drm_info.o drm_debugfs.o drm_encoder_slave.o
+drm-y := drm_atomic_uapi.o \
+		drm_atomic.o \
+		drm_auth.o \
+		drm_blend.o \
+		drm_bridge.o \
+		drm_bufs.o \
+		drm_cache.o \
+		drm_client_modeset.o \
+		drm_client.o \
+		drm_color_mgmt.o \
+		drm_connector.o \
+		drm_context.o \
+		drm_crtc.o \
+		drm_debugfs_crc.o \
+		drm_debugfs.o \
+		drm_dma.o \
+		drm_drv.o \
+		drm_dumb_buffers.o \
+		drm_edid.o \
+		drm_encoder.o \
+		drm_encoder_slave.o \
+		drm_file.o \
+		drm_flip_work.o \
+		drm_fourcc.o \
+		drm_framebuffer.o \
+		drm_gem.o \
+		drm_hashtab.o \
+		drm_hdcp.o \
+		drm_ioctl.o \
+		drm_irq.o \
+		drm_lease.o \
+		drm_legacy_misc.o \
+		drm_lock.o \
+		drm_memory.o \
+		drm_mm.o \
+		drm_mode_config.o \
+		drm_mode_object.o \
+		drm_modeset_lock.o \
+		drm_modes.o \
+		drm_panel.o \
+		drm_pci.o \
+		drm_plane.o \
+		drm_prime.o \
+		drm_print.o \
+		drm_property.o \
+		drm_rect.o \
+		drm_scatter.o \
+		drm_syncobj.o \
+		drm_sysfs.o \
+		drm_trace_points.o \
+		drm_vblank.o \
+		drm_vma_manager.o \
+		drm_vm.o \
+		drm_writeback.o \
+		pvr_drm_stubs.o
