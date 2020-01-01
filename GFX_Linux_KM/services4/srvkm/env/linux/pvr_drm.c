@@ -720,4 +720,10 @@ module_exit(PVRSRVDrmExit);
 #endif	/* !defined(SUPPORT_DRI_DRM_EXT) */
 #endif	/* defined(SUPPORT_DRI_DRM) */
 
-
+void
+__bad_xchg(volatile void *ptr, int size)
+{
+	printk(KERN_ERR "%s: ptr %p size %u\n",
+		__FUNCTION__, ptr, size);
+	BUG();
+}

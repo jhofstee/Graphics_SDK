@@ -231,4 +231,3 @@ __bad_xchg(volatile void *ptr, int size)
 		__FUNCTION__, ptr, size);
 	BUG();
 }
-EXPORT_SYMBOL(__bad_xchg);
